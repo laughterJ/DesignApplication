@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/colorTextBlack"
+        android:maxLines="2"
+        android:minLines="2"
+        android:lineSpacingExtra="6dp"
+        android:ellipsize="end"
+        android:paddingBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/tv_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/colorTextYellow"
+        android:textSize="14sp"
+        android:background="@drawable/shape_text1"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tv_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_toEndOf="@id/tv_tag"
+        android:layout_alignBaseline="@id/tv_tag"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/colorTextGreen"
+        android:textSize="14sp"
+        android:background="@drawable/shape_text2"/>
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_toEndOf="@id/tv_author"
+        android:layout_alignBaseline="@id/tv_author"
+        android:textColor="@color/colorWeakBlack"
+        android:textSize="12sp"/>
+
+</RelativeLayout>

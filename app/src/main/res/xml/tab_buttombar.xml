@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_homepage"
+        icon="@drawable/ic_homepage"
+        title="首页" />
+    <tab
+        id="@+id/tab_knowledge"
+        icon="@drawable/ic_knowledge"
+        title="体系" />
+    <tab
+        id="@+id/tab_project"
+        icon="@drawable/ic_proj"
+        title="项目" />
+    <tab
+        id="@+id/tab_location"
+        icon="@drawable/ic_loca"
+        title="导航" />
+    <tab
+        id="@+id/tab_todolist"
+        icon="@drawable/ic_todo"
+        title="TODO" />
+</tabs>
