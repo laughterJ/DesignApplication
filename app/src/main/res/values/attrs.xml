@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LoadingView">
+        <attr name="bottomLineColor" format="color"/>
+        <attr name="surfaceLineColor" format="color"/>
+        <attr name="backgroundColor" format="color"/>
+        <attr name="lineWidth" format="dimension"/>
+        <attr name="lineNum" format="integer"/>
+    </declare-styleable>
+</resources>

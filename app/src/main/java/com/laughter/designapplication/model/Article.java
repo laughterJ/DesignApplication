@@ -1,9 +1,8 @@
-package com.example.designapplication.model;
+package com.laughter.designapplication.model;
 
 /**
  * 作者： 江浩
  * 创建时间： 2018/12/21
- * 版权： 江苏远大信息股份有限公司
  * 描述： com.laughter.network
  */
 public class Article {

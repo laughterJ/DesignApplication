@@ -1,18 +1,17 @@
-package com.example.designapplication.activity;
+package com.laughter.designapplication.activity;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
-import com.example.designapplication.R;
-import com.example.designapplication.fragment.HomePageFragment;
-import com.example.designapplication.fragment.KnowledgeFragment;
-import com.example.designapplication.fragment.LocationFragment;
-import com.example.designapplication.fragment.ProjectFragment;
-import com.example.designapplication.fragment.TodoListFragment;
+import com.laughter.designapplication.R;
+import com.laughter.designapplication.fragment.HomePageFragment;
+import com.laughter.designapplication.fragment.KnowledgeFragment;
+import com.laughter.designapplication.fragment.LocationFragment;
+import com.laughter.designapplication.fragment.ProjectFragment;
+import com.laughter.designapplication.fragment.TodoListFragment;
 import com.roughike.bottombar.BottomBar;
 
 import butterknife.BindView;

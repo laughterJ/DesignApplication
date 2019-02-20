@@ -1,4 +1,4 @@
-package com.example.designapplication.activity;
+package com.laughter.designapplication.activity;
 
 import android.support.v7.app.AppCompatActivity;
 

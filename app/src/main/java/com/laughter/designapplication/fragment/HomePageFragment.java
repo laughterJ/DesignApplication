@@ -1,5 +1,4 @@
-package com.example.designapplication.fragment;
-
+package com.laughter.designapplication.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,12 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
-import com.example.designapplication.R;
-import com.example.designapplication.adapter.ArticleAdapter;
-import com.example.designapplication.model.Article;
-import com.example.designapplication.util.HttpUtil;
+import com.laughter.designapplication.R;
+import com.laughter.designapplication.adapter.ArticleAdapter;
+import com.laughter.designapplication.model.Article;
+import com.laughter.designapplication.util.HttpUtil;
+import com.laughter.framework.views.LoadingView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +35,9 @@ public class HomePageFragment extends Fragment implements Callback {
 
     @BindView(R.id.rl_view)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.loading_homepage)
+    LoadingView mLoadingView;
 
     private List<Article> mArticleList;
     private ArticleAdapter mAdapter;
@@ -59,6 +61,8 @@ public class HomePageFragment extends Fragment implements Callback {
 
         String address = "http://www.wanandroid.com/article/list/0/json";
         HttpUtil.sendOkHttpRequest(address, this);
+        mLoadingView.start();
+        mLoadingView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -102,6 +106,8 @@ public class HomePageFragment extends Fragment implements Callback {
             @Override
             public void run() {
                 mAdapter.notifyDataSetChanged();
+                mLoadingView.setVisibility(View.GONE);
+                mLoadingView.cancle();
             }
         });
     }
