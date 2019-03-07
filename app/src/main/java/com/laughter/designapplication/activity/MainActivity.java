@@ -2,9 +2,9 @@ package com.laughter.designapplication.activity;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.fragment.HomePageFragment;
@@ -15,7 +15,6 @@ import com.laughter.designapplication.fragment.TodoListFragment;
 import com.roughike.bottombar.BottomBar;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 作者： 江浩
@@ -23,13 +22,10 @@ import butterknife.ButterKnife;
  * 描述： com.example.designapplication.activity
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
-    @BindView(R.id.bottomBar)
-    BottomBar mBottomBar;
-
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    @BindView(R.id.bottomBar) BottomBar mBottomBar;
+    @BindView(R.id.toolbar) Toolbar mToolbar;
 
     private FragmentManager mFragmentManager;
     private FragmentTransaction mTranscation;
@@ -40,20 +36,26 @@ public class MainActivity extends AppCompatActivity {
     private LocationFragment mLocationFragment;
     private TodoListFragment mTodoListFragment;
 
+    private long lastPressTime = System.currentTimeMillis();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        initView();
     }
 
-    private void initView() {
+    @Override
+    public int getLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void initView() {
         mToolbar.setTitle("首页");
         setSupportActionBar(mToolbar);
         mFragmentManager = getSupportFragmentManager();
         mBottomBar.setOnTabSelectListener(tabId -> {
             mTranscation = mFragmentManager.beginTransaction();
+            // 隐藏所有 Fragment
             hideFragments();
             switch (tabId){
                 case R.id.tab_homepage:
@@ -103,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void initData() {
+
+    }
+
     private void hideFragments() {
         mHomePageFragment = (HomePageFragment) mFragmentManager.findFragmentByTag("HomePage");
         mKnowledgeFragment = (KnowledgeFragment) mFragmentManager.findFragmentByTag("Knowledge");
@@ -124,6 +131,17 @@ public class MainActivity extends AppCompatActivity {
         }
         if (mTodoListFragment != null){
             mTranscation.hide(mTodoListFragment);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        long nowTime = System.currentTimeMillis();
+        if (nowTime - lastPressTime > 1000) {
+            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            lastPressTime = nowTime;
+        } else{
+            finish();
         }
     }
 }

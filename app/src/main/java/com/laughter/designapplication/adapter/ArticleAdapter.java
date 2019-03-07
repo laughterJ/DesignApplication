@@ -27,7 +27,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     private List<Article> articleList;
     private Context mContext;
 
-    public ArticleAdapter(List<Article> articleList, Context mContext) {
+    public ArticleAdapter(Context mContext, List<Article> articleList) {
         this.articleList = articleList;
         this.mContext = mContext;
     }
@@ -44,8 +44,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         Article article = articleList.get(position);
         viewHolder.tvTitle.setText(article.getTitle());
         viewHolder.tvAuthor.setText(article.getAuthor());
-        if (article.getTagName() != null){
-            viewHolder.tvTag.setText(article.getTagName());
+        if (article.getTags().size() > 0 && article.getTags().get(0).getName() != null){
+            viewHolder.tvTag.setText(article.getTags().get(0).getName());
             viewHolder.tvTag.setVisibility(View.VISIBLE);
         }else {
             viewHolder.tvTag.setVisibility(View.GONE);
@@ -67,17 +67,10 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.tv_title)
-        TextView tvTitle;
-
-        @BindView(R.id.tv_author)
-        TextView tvAuthor;
-
-        @BindView(R.id.tv_tag)
-        TextView tvTag;
-
-        @BindView(R.id.tv_date)
-        TextView tvDate;
+        @BindView(R.id.tv_title) TextView tvTitle;
+        @BindView(R.id.tv_author) TextView tvAuthor;
+        @BindView(R.id.tv_tag) TextView tvTag;
+        @BindView(R.id.tv_date) TextView tvDate;
 
         View itemView;
 

@@ -9,4 +9,5 @@
     <color name="colorTextYellow">#CDDC39</color>
     <color name="colorTextGreen">#689F38</color>
     <color name="colorWeakBlack">#8A000000</color>
+    <color name="colorWhite">#FFFFFF</color>
 </resources>

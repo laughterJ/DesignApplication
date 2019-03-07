@@ -143,8 +143,6 @@ public class LoadingView extends View {
         if (valueAnimator != null){
             valueAnimator.cancel();
             valueAnimator.end();
-            valueAnimator.addUpdateListener(null);
-            valueAnimator.addListener(null);
         }
     }
 

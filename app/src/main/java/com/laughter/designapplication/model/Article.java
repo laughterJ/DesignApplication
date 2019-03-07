@@ -1,5 +1,9 @@
 package com.laughter.designapplication.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 /**
  * 作者： 江浩
  * 创建时间： 2018/12/21
@@ -9,7 +13,8 @@ public class Article {
 
     private String title;
     private String author;
-    private String tagName;
+    private List<Tag> tags;
+    @SerializedName("niceDate")
     private String date;
     private String link;
 
@@ -17,10 +22,10 @@ public class Article {
 
     }
 
-    public Article(String title, String author, String tagName, String date, String link){
+    public Article(String title, String author, List<Tag> tags, String date, String link){
         this.title = title;
         this.author = author;
-        this.tagName = tagName;
+        this.tags = tags;
         this.date = date;
         this.link = link;
     }
@@ -33,8 +38,8 @@ public class Article {
         return author;
     }
 
-    public String getTagName() {
-        return tagName;
+    public List<Tag> getTags() {
+        return tags;
     }
 
     public String getDate() {
@@ -53,8 +58,8 @@ public class Article {
         this.author = author;
     }
 
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 
     public void setDate(String date) {
@@ -63,5 +68,17 @@ public class Article {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public class Tag {
+        String name;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
     }
 }

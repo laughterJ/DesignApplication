@@ -1,5 +1,7 @@
 package com.laughter.designapplication.util;
 
+import android.util.Log;
+
 import com.laughter.designapplication.HttpCallbackListener;
 
 import java.io.BufferedReader;
@@ -18,13 +20,17 @@ import okhttp3.Request;
  * 描述： com.laughter.network.util
  */
 public class HttpUtil {
+
+    private static String baseUrl = "http://www.wanandroid.com/";
+
     public static void sendHttpRequest(final String address, final HttpCallbackListener listener){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 HttpURLConnection connection = null;
                 try {
-                    URL url = new URL(address);
+                    URL url = new URL(baseUrl + address);
+                    Log.e("coder", url.toString());
                     connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     connection.setConnectTimeout(8000);
@@ -39,6 +45,7 @@ public class HttpUtil {
                     if (listener != null){
                         listener.onFinish(response.toString());
                     }
+                    Log.d("coder", response.toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                     if (listener != null){
@@ -55,7 +62,8 @@ public class HttpUtil {
 
     public static void sendOkHttpRequest(final String address, okhttp3.Callback callback){
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(address).build();
+        Log.e("coder", baseUrl + address);
+        Request request = new Request.Builder().url(baseUrl + address).build();
         client.newCall(request).enqueue(callback);
     }
 }
