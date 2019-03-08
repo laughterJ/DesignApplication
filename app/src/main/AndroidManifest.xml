@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/TranslateStatusBarTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:allowBackup">
         <activity android:name="com.laughter.designapplication.activity.MainActivity"
             android:launchMode="singleTask">
             <intent-filter>

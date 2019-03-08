@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.laughter.designapplication.application.MyApplication;
+
 import butterknife.ButterKnife;
 
 
@@ -19,6 +21,8 @@ import butterknife.ButterKnife;
  */
 
 public abstract class BaseFragment extends Fragment {
+
+    public Context mContext;
 
     @Nullable
     @Override
@@ -31,6 +35,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mContext = getContext() != null ? getContext() : MyApplication.getInstance();
         initView();
         initData();
     }

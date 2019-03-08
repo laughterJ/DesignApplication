@@ -25,6 +25,13 @@ public class LocationFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+//        MaterialHeader mHeader = new MaterialHeader(mContext);
+//        mHeader.setColorSchemeColors(colorAccent);
+//        mHeader.setBackgroundColor(colorWhite);
+//        srlTree.setRefreshHeader(mHeader);
+//        BallPulseFooter mFooter = new BallPulseFooter(mContext);
+//        srlTree.setRefreshFooter(mFooter);
+//        srlTree.setOnRefreshListener(this);
+//        srlTree.setOnLoadMoreListener(this);
     }
 }

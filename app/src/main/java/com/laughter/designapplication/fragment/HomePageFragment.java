@@ -19,7 +19,6 @@ import com.google.gson.JsonParser;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.adapter.ArticleAdapter;
 import com.laughter.designapplication.adapter.ArticleAdapterWrapper;
-import com.laughter.designapplication.application.MyApplication;
 import com.laughter.designapplication.model.Article;
 import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.designapplication.util.JsonUtil;
@@ -45,7 +44,6 @@ public class HomePageFragment extends BaseFragment implements Callback, SwipeRef
     @BindView(R.id.loading_homepage)
     LoadingView mLoadingView;
 
-    private Context mContext;
     private List<Article> mArticleList;
     private ArticleAdapter mAdapter;
     private ArticleAdapterWrapper wrapperAdapter;
@@ -72,8 +70,6 @@ public class HomePageFragment extends BaseFragment implements Callback, SwipeRef
 
     @Override
     public void initView() {
-        mContext = getContext() != null ? getContext() : MyApplication.getInstance();
-
         mRefreshLayout.setRefreshing(false);
         mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         mRefreshLayout.setOnRefreshListener(this);
@@ -100,7 +96,6 @@ public class HomePageFragment extends BaseFragment implements Callback, SwipeRef
 
     @Override
     public void initData() {
-        mArticleList.clear();
         curPage = 0;
         HttpUtil.sendOkHttpRequest("article/list/" +curPage + "/json", this);
         mLoadingView.start();
@@ -116,9 +111,8 @@ public class HomePageFragment extends BaseFragment implements Callback, SwipeRef
     public void onResponse(@NonNull Call call, @NonNull Response response) {
         mFooterView.setVisibility(View.VISIBLE);
         try {
-            String jsonData = null;
             if (response.body() != null){
-                jsonData = response.body().string();
+                String jsonData = response.body().string();
                 JsonObject jsonObj = new JsonParser().parse(jsonData).getAsJsonObject();
                 if (jsonObj.get("errorCode").getAsInt() == 0){
                     mArticleList.addAll(JsonUtil.getHomePageArticle(jsonObj));
