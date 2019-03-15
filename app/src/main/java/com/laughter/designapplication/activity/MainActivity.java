@@ -1,18 +1,31 @@
 package com.laughter.designapplication.activity;
 
+import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.fragment.HomePageFragment;
 import com.laughter.designapplication.fragment.KnowledgeFragment;
 import com.laughter.designapplication.fragment.LocationFragment;
 import com.laughter.designapplication.fragment.ProjectFragment;
 import com.laughter.designapplication.fragment.TodoListFragment;
-import com.roughike.bottombar.BottomBar;
+import com.laughter.designapplication.model.Tree;
+import com.laughter.designapplication.util.HttpUtil;
+import com.laughter.designapplication.util.JsonUtil;
+
+import org.litepal.LitePal;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -22,10 +35,10 @@ import butterknife.BindView;
  * 描述： com.example.designapplication.activity
  */
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, HttpCallbackListener {
 
-    @BindView(R.id.bottomBar) BottomBar mBottomBar;
-    @BindView(R.id.toolbar) Toolbar mToolbar;
+    @BindView(R.id.bottombar)
+    BottomNavigationView mBottomBar;
 
     private FragmentManager mFragmentManager;
     private FragmentTransaction mTranscation;
@@ -36,12 +49,9 @@ public class MainActivity extends BaseActivity {
     private LocationFragment mLocationFragment;
     private TodoListFragment mTodoListFragment;
 
-    private long lastPressTime = System.currentTimeMillis();
+    private List<Tree> menuItems;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    private long lastPressTime = System.currentTimeMillis();
 
     @Override
     public int getLayout() {
@@ -50,64 +60,75 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        mToolbar.setTitle("首页");
-        setSupportActionBar(mToolbar);
         mFragmentManager = getSupportFragmentManager();
-        mBottomBar.setOnTabSelectListener(tabId -> {
-            mTranscation = mFragmentManager.beginTransaction();
-            // 隐藏所有 Fragment
-            hideFragments();
-            switch (tabId){
-                case R.id.tab_homepage:
-                    if (mHomePageFragment == null){
-                        mHomePageFragment = new HomePageFragment();
-                        mTranscation.add(R.id.continer, mHomePageFragment, "HomePage");
-                    }else {
-                        mTranscation.show(mHomePageFragment);
-                    }
-                    break;
-                case R.id.tab_knowledge:
-                    if (mKnowledgeFragment == null){
-                        mKnowledgeFragment = new KnowledgeFragment();
-                        mTranscation.add(R.id.continer, mKnowledgeFragment, "Knowledge");
-                    }else {
-                        mTranscation.show(mKnowledgeFragment);
-                    }
-                    break;
-                case R.id.tab_project:
-                    if (mProjectFragment == null){
-                        mProjectFragment = new ProjectFragment();
-                        mTranscation.add(R.id.continer, mProjectFragment, "Project");
-                    }else {
-                        mTranscation.show(mProjectFragment);
-                    }
-                    break;
-                case R.id.tab_location:
-                    if (mLocationFragment == null){
-                        mLocationFragment = new LocationFragment();
-                        mTranscation.add(R.id.continer, mLocationFragment, "Location");
-                    }else {
-                        mTranscation.show(mLocationFragment);
-                    }
-                    break;
-                case R.id.tab_todolist:
-                    if (mTodoListFragment == null){
-                        mTodoListFragment = new TodoListFragment();
-                        mTranscation.add(R.id.continer, mTodoListFragment, "TodoList");
-                    }else {
-                        mTranscation.show(mTodoListFragment);
-                    }
-                    break;
-                default:
-                    break;
-            }
-            mTranscation.commit();
-        });
+        mBottomBar.setOnNavigationItemSelectedListener(this);
+        mTranscation = mFragmentManager.beginTransaction();
+        hideFragments();
+        if (mHomePageFragment == null){
+            mHomePageFragment = new HomePageFragment();
+            mTranscation.add(R.id.continer, mHomePageFragment, "HomePage");
+        }else {
+            mTranscation.show(mHomePageFragment);
+        }
+        mTranscation.commit();
     }
 
     @Override
     public void initData() {
+        HttpUtil.sendHttpRequest("project/tree/json", 0, this);
+    }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        mTranscation = mFragmentManager.beginTransaction();
+        // 隐藏所有 Fragment
+        hideFragments();
+        switch (menuItem.getItemId()){
+            case R.id.tab_homepage:
+                if (mHomePageFragment == null){
+                    mHomePageFragment = new HomePageFragment();
+                    mTranscation.add(R.id.continer, mHomePageFragment, "HomePage");
+                }else {
+                    mTranscation.show(mHomePageFragment);
+                }
+                break;
+            case R.id.tab_knowledge:
+                if (mKnowledgeFragment == null){
+                    mKnowledgeFragment = new KnowledgeFragment();
+                    mTranscation.add(R.id.continer, mKnowledgeFragment, "Knowledge");
+                }else {
+                    mTranscation.show(mKnowledgeFragment);
+                }
+                break;
+            case R.id.tab_project:
+                if (mProjectFragment == null){
+                    mProjectFragment = new ProjectFragment();
+                    mTranscation.add(R.id.continer, mProjectFragment, "Project");
+                }else {
+                    mTranscation.show(mProjectFragment);
+                }
+                break;
+            case R.id.tab_location:
+                if (mLocationFragment == null){
+                    mLocationFragment = new LocationFragment();
+                    mTranscation.add(R.id.continer, mLocationFragment, "Location");
+                }else {
+                    mTranscation.show(mLocationFragment);
+                }
+                break;
+            case R.id.tab_todolist:
+                if (mTodoListFragment == null){
+                    mTodoListFragment = new TodoListFragment();
+                    mTranscation.add(R.id.continer, mTodoListFragment, "TodoList");
+                }else {
+                    mTranscation.show(mTodoListFragment);
+                }
+                break;
+            default:
+                break;
+        }
+        mTranscation.commit();
+        return true;
     }
 
     private void hideFragments() {
@@ -143,5 +164,26 @@ public class MainActivity extends BaseActivity {
         } else{
             finish();
         }
+    }
+
+    @Override
+    public void onFinish(int requestId, String response) {
+        try {
+            if (response != null){
+                JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
+                if (jsonObj.get("errorCode").getAsInt() == 0){
+                    LitePal.saveAll(JsonUtil.getTrees(jsonObj));
+                }else {
+                    Toast.makeText(this, jsonObj.get("errorMsg").getAsString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onFailure(Exception e) {
+
     }
 }

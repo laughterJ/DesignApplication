@@ -6,16 +6,25 @@
     android:background="@color/colorWhite"
     tools:context=".fragment.KnowledgeFragment">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/srl_tree"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rl_tree"
+        <include layout="@layout/toolbar"/>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/srl_tree"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rl_tree"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
 
     <com.laughter.framework.views.LoadingView
         android:id="@+id/loading_trees"

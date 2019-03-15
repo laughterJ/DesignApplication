@@ -21,9 +21,9 @@ import okhttp3.Request;
  */
 public class HttpUtil {
 
-    private static String baseUrl = "http://www.wanandroid.com/";
+    private static String baseUrl = "https://www.wanandroid.com/";
 
-    public static void sendHttpRequest(final String address, final HttpCallbackListener listener){
+    public static void sendHttpRequest(final String address, int requestId, final HttpCallbackListener listener){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -43,7 +43,7 @@ public class HttpUtil {
                         response.append(line);
                     }
                     if (listener != null){
-                        listener.onFinish(response.toString());
+                        listener.onFinish(requestId, response.toString());
                     }
                     Log.d("coder", response.toString());
                 } catch (Exception e) {

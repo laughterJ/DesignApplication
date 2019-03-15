@@ -2,6 +2,8 @@ package com.laughter.designapplication.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.litepal.crud.LitePalSupport;
+
 import java.util.List;
 
 /**
@@ -10,7 +12,7 @@ import java.util.List;
  * 版权： 江苏远大信息股份有限公司
  * 描述： com.laughter.designapplication.model
  */
-public class Tree {
+public class Tree extends LitePalSupport {
 
     private String name;
     @SerializedName("id")

@@ -55,6 +55,13 @@ public class TreesAdapter extends RecyclerView.Adapter<TreesAdapter.ViewHolder> 
             tvLabel.setPadding(0, 0, 32, 0);
             viewHolder.fblLabel.addView(tvLabel);
         }
+        if (index < mTree.getChildTrsss().size()){
+            TextView tvLabel = new TextView(mContet);
+            tvLabel.setText("...");
+            tvLabel.setTextSize(16);
+            tvLabel.setTextColor(viewHolder.colorWeakBlack);
+            viewHolder.fblLabel.addView(tvLabel);
+        }
     }
 
     @Override

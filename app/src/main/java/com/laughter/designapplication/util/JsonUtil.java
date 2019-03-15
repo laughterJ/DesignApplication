@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.laughter.designapplication.model.Article;
+import com.laughter.designapplication.model.Project;
 import com.laughter.designapplication.model.Tree;
 
 import java.lang.reflect.Type;
@@ -35,5 +36,15 @@ public class JsonUtil {
             trees = new Gson().fromJson(datas, new TypeToken<List<Tree>>(){}.getType());
         }
         return trees;
+    }
+
+    public static List<Project> getProjects(JsonObject jsonObj) {
+        List<Project> projects = null;
+        JsonObject data = jsonObj.getAsJsonObject("data");
+        if (data.get("datas").getClass() == JsonArray.class){
+            JsonArray datas = data.getAsJsonArray("datas");
+            projects = new Gson().fromJson(datas, new TypeToken<List<Project>>(){}.getType());
+        }
+        return projects;
     }
 }

@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -36,6 +38,7 @@ public class KnowledgeFragment extends BaseFragment implements SwipeRefreshLayou
     @BindView(R.id.srl_tree) SwipeRefreshLayout srlTree;
     @BindView(R.id.rl_tree) RecyclerView rlTree;
     @BindView(R.id.loading_trees) LoadingView mLoadingView;
+    @BindView(R.id.toolbar) Toolbar mToolbar;
 
     @BindColor(R.color.colorPrimary) int colorPrimary;
     @BindColor(R.color.colorWhite) int colorWhite;
@@ -44,17 +47,15 @@ public class KnowledgeFragment extends BaseFragment implements SwipeRefreshLayou
     private TreesAdapter mAdapter;
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
     public int getLayout() {
         return R.layout.fragment_knowledge;
     }
 
     @Override
     public void initView() {
+        mToolbar.setTitle("体系");
+        ((AppCompatActivity)mContext).setSupportActionBar(mToolbar);
+
         srlTree.setColorSchemeColors(colorPrimary);
         srlTree.setBackgroundColor(colorWhite);
         srlTree.setRefreshing(false);
@@ -79,6 +80,7 @@ public class KnowledgeFragment extends BaseFragment implements SwipeRefreshLayou
     @Override
     public void onRefresh() {
         trees.clear();
+        mAdapter.notifyDataSetChanged();
         HttpUtil.sendOkHttpRequest("tree/json", this);
     }
 

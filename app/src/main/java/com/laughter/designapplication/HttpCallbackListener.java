@@ -7,6 +7,6 @@ package com.laughter.designapplication;
  * 描述： com.laughter.network
  */
 public interface HttpCallbackListener {
-    void onFinish(String response);
+    void onFinish(int requestId, String response);
     void onFailure(Exception e);
 }
