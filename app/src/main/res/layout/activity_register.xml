@@ -49,6 +49,18 @@
         android:textColor="@color/colorTextBlack"
         android:textSize="16sp"/>
 
+    <EditText
+        android:id="@+id/edit_repeat_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginTop="32dp"
+        android:inputType="textPassword"
+        android:hint="@string/repeat_pass"
+        android:textColor="@color/colorTextBlack"
+        android:textSize="16sp"/>
+
     <Button
         android:id="@+id/but_register"
         android:layout_width="match_parent"

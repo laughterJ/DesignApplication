@@ -27,4 +27,5 @@
     <string name="register_hint">欢迎注册 Wan Android</string>
     <string name="but_register">注册</string>
     <string name="tv_sign_in"><u>我要登录</u></string>
+    <string name="repeat_pass">确认密码</string>
 </resources>

@@ -1,13 +1,10 @@
 package com.laughter.designapplication.activity;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
@@ -75,7 +72,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void initData() {
-        HttpUtil.sendHttpRequest("project/tree/json", 0, this);
+        HttpUtil.sendGetRequest("project/tree/json", 0, this);
     }
 
     @Override

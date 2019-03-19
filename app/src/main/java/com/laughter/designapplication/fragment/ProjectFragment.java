@@ -78,7 +78,7 @@ public class ProjectFragment extends BaseFragment implements HttpCallbackListene
     public void initData() {
         menuItems = LitePal.findAll(Tree.class);
         cid = menuItems.get(0).getCid();
-        HttpUtil.sendHttpRequest("project/list/" + curPage + "/json?cid=" + cid, 1, this);
+        HttpUtil.sendGetRequest("project/list/" + curPage + "/json?cid=" + cid, 1, this);
         mLoadingView.start();
         mLoadingView.setVisibility(View.VISIBLE);
     }
@@ -105,13 +105,13 @@ public class ProjectFragment extends BaseFragment implements HttpCallbackListene
         curPage = 1;
         mProjects.clear();
         mAdapter.notifyDataSetChanged();
-        HttpUtil.sendHttpRequest("project/list/" + curPage + "/json?cid=" + cid, 1, this);
+        HttpUtil.sendGetRequest("project/list/" + curPage + "/json?cid=" + cid, 1, this);
     }
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
         ++curPage;
-        HttpUtil.sendHttpRequest("project/list/" + curPage + "/json?cid=" + cid, 1, this);
+        HttpUtil.sendGetRequest("project/list/" + curPage + "/json?cid=" + cid, 1, this);
     }
 
     @Override
