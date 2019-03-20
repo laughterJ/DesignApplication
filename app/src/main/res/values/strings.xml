@@ -28,4 +28,10 @@
     <string name="but_register">注册</string>
     <string name="tv_sign_in"><u>我要登录</u></string>
     <string name="repeat_pass">确认密码</string>
+    <string name="just_do_it">Just do it !</string>
+    <string name="collection">我的收藏</string>
+    <string name="todolist">ToDoList</string>
+    <string name="author">关于作者</string>
+    <string name="sign"><u>登陆/注册</u></string>
+    <string name="log_off">退出登录</string>
 </resources>

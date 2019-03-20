@@ -79,13 +79,14 @@ public class HttpUtil {
                 HttpURLConnection connection = null;
                 try {
                     URL url = new URL(baseUrl + address);
-                    Log.e("coder", url.toString() + "【" + paramsObj.toString() + "】");
+                    Log.e("coder", url.toString());
                     connection = (HttpURLConnection)url.openConnection();
                     connection.setRequestMethod(method);
                     connection.setReadTimeout(8000);
                     connection.setReadTimeout(8000);
 
                     if (method.equals("POST")){
+                        Log.e("coder", "【" + paramsObj.toString() + "】");
                         connection.setDoInput(true);
                         connection.setDoOutput(true);
 

@@ -88,6 +88,7 @@ public class LoginActivity extends BaseActivity implements HttpCallbackListener 
                     ToastUtil.showShortToast(LoginActivity.this, "登陆成功");
                     SpUtil.putString(LoginActivity.this, "username", editUserName.getText().toString());
                     SpUtil.putString(LoginActivity.this, "password", editPassword.getText().toString());
+                    SpUtil.putBoolean(LoginActivity.this, "isLogin", true);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                 }

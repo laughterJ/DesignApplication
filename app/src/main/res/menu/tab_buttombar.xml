@@ -17,7 +17,7 @@
         android:icon="@drawable/ic_loca"
         android:title="导航" />
     <item
-        android:id="@+id/tab_todolist"
-        android:icon="@drawable/ic_todo"
-        android:title="TODO" />
+        android:id="@+id/tab_personal"
+        android:icon="@drawable/ic_personal"
+        android:title="个人" />
 </menu>

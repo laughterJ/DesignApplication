@@ -22,4 +22,15 @@ public class SpUtil {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getString(key, defVal);
     }
+
+    public static void putBoolean(Context context, String key, boolean val){
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putBoolean(key, val);
+        editor.apply();
+    }
+
+    public static Boolean getBoolean(Context context, String key, boolean defVal){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean(key, defVal);
+    }
 }

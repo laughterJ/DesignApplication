@@ -1,5 +1,6 @@
 package com.laughter.designapplication.activity;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
@@ -15,14 +16,11 @@ import com.laughter.designapplication.fragment.HomePageFragment;
 import com.laughter.designapplication.fragment.KnowledgeFragment;
 import com.laughter.designapplication.fragment.LocationFragment;
 import com.laughter.designapplication.fragment.ProjectFragment;
-import com.laughter.designapplication.fragment.TodoListFragment;
-import com.laughter.designapplication.model.Tree;
+import com.laughter.designapplication.fragment.PersonalFragment;
 import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.designapplication.util.JsonUtil;
 
 import org.litepal.LitePal;
-
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -44,9 +42,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     private KnowledgeFragment mKnowledgeFragment;
     private ProjectFragment mProjectFragment;
     private LocationFragment mLocationFragment;
-    private TodoListFragment mTodoListFragment;
-
-    private List<Tree> menuItems;
+    private PersonalFragment mPersonalFragment;
 
     private long lastPressTime = System.currentTimeMillis();
 
@@ -56,7 +52,17 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mPersonalFragment = (PersonalFragment) mFragmentManager.findFragmentByTag("TodoList");
+        if (mPersonalFragment != null){
+            mPersonalFragment.initView();
+        }
+    }
+
+    @Override
     public void initView() {
+        mBottomBar.setSelectedItemId(R.id.tab_homepage);
         mFragmentManager = getSupportFragmentManager();
         mBottomBar.setOnNavigationItemSelectedListener(this);
         mTranscation = mFragmentManager.beginTransaction();
@@ -113,12 +119,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                     mTranscation.show(mLocationFragment);
                 }
                 break;
-            case R.id.tab_todolist:
-                if (mTodoListFragment == null){
-                    mTodoListFragment = new TodoListFragment();
-                    mTranscation.add(R.id.continer, mTodoListFragment, "TodoList");
+            case R.id.tab_personal:
+                if (mPersonalFragment == null){
+                    mPersonalFragment = new PersonalFragment();
+                    mTranscation.add(R.id.continer, mPersonalFragment, "TodoList");
                 }else {
-                    mTranscation.show(mTodoListFragment);
+                    mTranscation.show(mPersonalFragment);
                 }
                 break;
             default:
@@ -133,7 +139,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         mKnowledgeFragment = (KnowledgeFragment) mFragmentManager.findFragmentByTag("Knowledge");
         mProjectFragment = (ProjectFragment) mFragmentManager.findFragmentByTag("Project");
         mLocationFragment = (LocationFragment) mFragmentManager.findFragmentByTag("Location");
-        mTodoListFragment = (TodoListFragment) mFragmentManager.findFragmentByTag("TodoList");
+        mPersonalFragment = (PersonalFragment) mFragmentManager.findFragmentByTag("TodoList");
 
         if (mHomePageFragment != null){
             mTranscation.hide(mHomePageFragment);
@@ -147,8 +153,32 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         if (mLocationFragment != null){
             mTranscation.hide(mLocationFragment);
         }
-        if (mTodoListFragment != null){
-            mTranscation.hide(mTodoListFragment);
+        if (mPersonalFragment != null){
+            mTranscation.hide(mPersonalFragment);
+        }
+    }
+
+    private void removeFragments() {
+        mHomePageFragment = (HomePageFragment) mFragmentManager.findFragmentByTag("HomePage");
+        mKnowledgeFragment = (KnowledgeFragment) mFragmentManager.findFragmentByTag("Knowledge");
+        mProjectFragment = (ProjectFragment) mFragmentManager.findFragmentByTag("Project");
+        mLocationFragment = (LocationFragment) mFragmentManager.findFragmentByTag("Location");
+        mPersonalFragment = (PersonalFragment) mFragmentManager.findFragmentByTag("TodoList");
+
+        if (mHomePageFragment != null){
+            mTranscation.remove(mHomePageFragment);
+        }
+        if (mKnowledgeFragment != null){
+            mTranscation.remove(mKnowledgeFragment);
+        }
+        if (mProjectFragment != null){
+            mTranscation.remove(mProjectFragment);
+        }
+        if (mLocationFragment != null){
+            mTranscation.remove(mLocationFragment);
+        }
+        if (mPersonalFragment != null){
+            mTranscation.remove(mPersonalFragment);
         }
     }
 

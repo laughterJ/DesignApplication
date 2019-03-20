@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="42dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_profile_pic"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:contentDescription="@string/todo"
+            android:layout_marginEnd="12dp"/>
+        
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/img_profile_pic"
+            android:text="@string/sign"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tv_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/img_profile_pic"
+            android:layout_alignBottom="@id/img_profile_pic"
+            android:text="@string/just_do_it"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"/>
+
+    </RelativeLayout>
+</merge>
