@@ -14,9 +14,10 @@ import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.fragment.HomePageFragment;
 import com.laughter.designapplication.fragment.KnowledgeFragment;
-import com.laughter.designapplication.fragment.LocationFragment;
+import com.laughter.designapplication.fragment.WeChatFragment;
 import com.laughter.designapplication.fragment.ProjectFragment;
 import com.laughter.designapplication.fragment.PersonalFragment;
+import com.laughter.designapplication.model.Tree;
 import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.designapplication.util.JsonUtil;
 
@@ -35,13 +36,19 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     @BindView(R.id.bottombar)
     BottomNavigationView mBottomBar;
 
+    private static final String TAG_HOMEPAGE = "HomePage";
+    private static final String TAG_KNOWLEDGE = "Knowledge";
+    private static final String TAG_PROJECT = "Project";
+    private static final String TAG_WECHAT = "WeChat";
+    private static final String TAG_PERSONAL = "Personal";
+
     private FragmentManager mFragmentManager;
     private FragmentTransaction mTranscation;
 
     private HomePageFragment mHomePageFragment;
     private KnowledgeFragment mKnowledgeFragment;
     private ProjectFragment mProjectFragment;
-    private LocationFragment mLocationFragment;
+    private WeChatFragment mWeChatFragment;
     private PersonalFragment mPersonalFragment;
 
     private long lastPressTime = System.currentTimeMillis();
@@ -54,7 +61,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        mPersonalFragment = (PersonalFragment) mFragmentManager.findFragmentByTag("TodoList");
+        mPersonalFragment = (PersonalFragment) mFragmentManager.findFragmentByTag(TAG_PERSONAL);
         if (mPersonalFragment != null){
             mPersonalFragment.initView();
         }
@@ -69,7 +76,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         hideFragments();
         if (mHomePageFragment == null){
             mHomePageFragment = new HomePageFragment();
-            mTranscation.add(R.id.continer, mHomePageFragment, "HomePage");
+            mTranscation.add(R.id.continer, mHomePageFragment, TAG_HOMEPAGE);
         }else {
             mTranscation.show(mHomePageFragment);
         }
@@ -90,7 +97,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             case R.id.tab_homepage:
                 if (mHomePageFragment == null){
                     mHomePageFragment = new HomePageFragment();
-                    mTranscation.add(R.id.continer, mHomePageFragment, "HomePage");
+                    mTranscation.add(R.id.continer, mHomePageFragment, TAG_HOMEPAGE);
                 }else {
                     mTranscation.show(mHomePageFragment);
                 }
@@ -98,7 +105,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             case R.id.tab_knowledge:
                 if (mKnowledgeFragment == null){
                     mKnowledgeFragment = new KnowledgeFragment();
-                    mTranscation.add(R.id.continer, mKnowledgeFragment, "Knowledge");
+                    mTranscation.add(R.id.continer, mKnowledgeFragment, TAG_KNOWLEDGE);
                 }else {
                     mTranscation.show(mKnowledgeFragment);
                 }
@@ -106,23 +113,23 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             case R.id.tab_project:
                 if (mProjectFragment == null){
                     mProjectFragment = new ProjectFragment();
-                    mTranscation.add(R.id.continer, mProjectFragment, "Project");
+                    mTranscation.add(R.id.continer, mProjectFragment, TAG_PROJECT);
                 }else {
                     mTranscation.show(mProjectFragment);
                 }
                 break;
             case R.id.tab_location:
-                if (mLocationFragment == null){
-                    mLocationFragment = new LocationFragment();
-                    mTranscation.add(R.id.continer, mLocationFragment, "Location");
+                if (mWeChatFragment == null){
+                    mWeChatFragment = new WeChatFragment();
+                    mTranscation.add(R.id.continer, mWeChatFragment, TAG_WECHAT);
                 }else {
-                    mTranscation.show(mLocationFragment);
+                    mTranscation.show(mWeChatFragment);
                 }
                 break;
             case R.id.tab_personal:
                 if (mPersonalFragment == null){
                     mPersonalFragment = new PersonalFragment();
-                    mTranscation.add(R.id.continer, mPersonalFragment, "TodoList");
+                    mTranscation.add(R.id.continer, mPersonalFragment, TAG_PERSONAL);
                 }else {
                     mTranscation.show(mPersonalFragment);
                 }
@@ -135,11 +142,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
     private void hideFragments() {
-        mHomePageFragment = (HomePageFragment) mFragmentManager.findFragmentByTag("HomePage");
-        mKnowledgeFragment = (KnowledgeFragment) mFragmentManager.findFragmentByTag("Knowledge");
-        mProjectFragment = (ProjectFragment) mFragmentManager.findFragmentByTag("Project");
-        mLocationFragment = (LocationFragment) mFragmentManager.findFragmentByTag("Location");
-        mPersonalFragment = (PersonalFragment) mFragmentManager.findFragmentByTag("TodoList");
+        mHomePageFragment = (HomePageFragment) mFragmentManager.findFragmentByTag(TAG_HOMEPAGE);
+        mKnowledgeFragment = (KnowledgeFragment) mFragmentManager.findFragmentByTag(TAG_KNOWLEDGE);
+        mProjectFragment = (ProjectFragment) mFragmentManager.findFragmentByTag(TAG_PROJECT);
+        mWeChatFragment = (WeChatFragment) mFragmentManager.findFragmentByTag(TAG_WECHAT);
+        mPersonalFragment = (PersonalFragment) mFragmentManager.findFragmentByTag(TAG_PERSONAL);
 
         if (mHomePageFragment != null){
             mTranscation.hide(mHomePageFragment);
@@ -150,35 +157,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         if (mProjectFragment != null){
             mTranscation.hide(mProjectFragment);
         }
-        if (mLocationFragment != null){
-            mTranscation.hide(mLocationFragment);
+        if (mWeChatFragment != null){
+            mTranscation.hide(mWeChatFragment);
         }
         if (mPersonalFragment != null){
             mTranscation.hide(mPersonalFragment);
-        }
-    }
-
-    private void removeFragments() {
-        mHomePageFragment = (HomePageFragment) mFragmentManager.findFragmentByTag("HomePage");
-        mKnowledgeFragment = (KnowledgeFragment) mFragmentManager.findFragmentByTag("Knowledge");
-        mProjectFragment = (ProjectFragment) mFragmentManager.findFragmentByTag("Project");
-        mLocationFragment = (LocationFragment) mFragmentManager.findFragmentByTag("Location");
-        mPersonalFragment = (PersonalFragment) mFragmentManager.findFragmentByTag("TodoList");
-
-        if (mHomePageFragment != null){
-            mTranscation.remove(mHomePageFragment);
-        }
-        if (mKnowledgeFragment != null){
-            mTranscation.remove(mKnowledgeFragment);
-        }
-        if (mProjectFragment != null){
-            mTranscation.remove(mProjectFragment);
-        }
-        if (mLocationFragment != null){
-            mTranscation.remove(mLocationFragment);
-        }
-        if (mPersonalFragment != null){
-            mTranscation.remove(mPersonalFragment);
         }
     }
 
@@ -195,6 +178,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void onFinish(int requestId, String response) {
+        LitePal.deleteAll(Tree.class);
         try {
             if (response != null){
                 JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();

@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.laughter.designapplication.model.Article;
+import com.laughter.designapplication.model.OfficialAccount;
 import com.laughter.designapplication.model.Project;
 import com.laughter.designapplication.model.Tree;
 
@@ -19,7 +20,7 @@ import java.util.List;
  */
 public class JsonUtil {
 
-    public static List<Article> getHomePageArticle(JsonObject jsonObj) {
+    public static List<Article> getArticles(JsonObject jsonObj) {
         List<Article> articles = null;
         JsonObject data = jsonObj.getAsJsonObject("data");
         if (data.get("datas").getClass() == JsonArray.class){
@@ -46,5 +47,14 @@ public class JsonUtil {
             projects = new Gson().fromJson(datas, new TypeToken<List<Project>>(){}.getType());
         }
         return projects;
+    }
+
+    public static List<OfficialAccount> getOfficialAccounts(JsonObject jsonObj){
+        List<OfficialAccount> oas = null;
+        if (jsonObj.get("data").getClass() == JsonArray.class){
+            JsonArray data = jsonObj.get("data").getAsJsonArray();
+            oas = new Gson().fromJson(data, new TypeToken<List<OfficialAccount>>(){}.getType());
+        }
+        return oas;
     }
 }

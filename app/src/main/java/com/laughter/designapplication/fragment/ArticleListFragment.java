@@ -1,12 +1,11 @@
 package com.laughter.designapplication.fragment;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
@@ -32,7 +31,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class HomePageFragment extends BaseFragment implements Callback, OnRefreshListener, OnLoadMoreListener {
+public class ArticleListFragment extends BaseFragment implements OnRefreshListener, OnLoadMoreListener, Callback {
 
     @BindView(R.id.srl)
     SmartRefreshLayout mRefreshLayout;
@@ -40,26 +39,33 @@ public class HomePageFragment extends BaseFragment implements Callback, OnRefres
     @BindView(R.id.rv)
     RecyclerView mRecyclerView;
 
-    @BindView(R.id.loading_homepage)
+    @BindView(R.id.loading_view)
     LoadingView mLoadingView;
-
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
 
     private List<Article> mArticleList;
     private ArticleAdapter mAdapter;
 
     private int curPage;
+    private String id;
+
+    public static ArticleListFragment newInstance(String id) {
+        ArticleListFragment fragment = new ArticleListFragment();
+        Bundle args = new Bundle();
+        args.putString("id", id);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public int getLayout() {
-        return R.layout.fragment_home_page;
+        return R.layout.fragment_article_list;
     }
 
     @Override
     public void initView() {
-        mToolbar.setTitle("首页");
-        ((AppCompatActivity)mContext).setSupportActionBar(mToolbar);
+        if (getArguments() != null){
+            id = getArguments().getString("id", "");
+        }
 
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setOnLoadMoreListener(this);
@@ -73,18 +79,32 @@ public class HomePageFragment extends BaseFragment implements Callback, OnRefres
     @Override
     public void initData() {
         curPage = 0;
-        HttpUtil.sendOkHttpRequest("article/list/" +curPage + "/json", this);
+        HttpUtil.sendOkHttpRequest("wxarticle/list/" + id + "/" + curPage + "/json", this);
         mLoadingView.start();
         mLoadingView.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void onFailure(@NonNull Call call, @NonNull IOException e) {
-        e.printStackTrace();
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        curPage = 1;
+        mArticleList.clear();
+        mAdapter.notifyDataSetChanged();
+        HttpUtil.sendOkHttpRequest("wxarticle/list/" + id + "/" + curPage + "/json", this);
     }
 
     @Override
-    public void onResponse(@NonNull Call call, @NonNull Response response) {
+    public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+        ++ curPage;
+        HttpUtil.sendOkHttpRequest("wxarticle/list/" + id + "/" + curPage + "/json", this);
+    }
+
+    @Override
+    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+    }
+
+    @Override
+    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
         try {
             if (response.body() != null){
                 String jsonData = response.body().string();
@@ -109,19 +129,5 @@ public class HomePageFragment extends BaseFragment implements Callback, OnRefres
                 }
             });
         }
-    }
-
-    @Override
-    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        mArticleList.clear();
-        mAdapter.notifyDataSetChanged();
-        curPage = 0;
-        HttpUtil.sendOkHttpRequest("article/list/" +curPage + "/json", this);
-    }
-
-    @Override
-    public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-        ++curPage;
-        HttpUtil.sendOkHttpRequest("article/list/" +curPage + "/json", HomePageFragment.this);
     }
 }

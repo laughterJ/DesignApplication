@@ -10,4 +10,5 @@
     <color name="colorTextGreen">#689F38</color>
     <color name="colorWeakBlack">#8A000000</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorWeakWhite">#42FFFFFF</color>
 </resources>

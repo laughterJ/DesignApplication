@@ -24,11 +24,12 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment {
 
     public Context mContext;
+    private View view;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayout(), parent, false);
+        if (view == null) view = inflater.inflate(getLayout(), parent, false);
         ButterKnife.bind(this, view);
         return view;
     }
