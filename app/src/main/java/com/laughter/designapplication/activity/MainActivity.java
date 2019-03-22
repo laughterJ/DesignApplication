@@ -1,7 +1,9 @@
 package com.laughter.designapplication.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -52,6 +54,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     private PersonalFragment mPersonalFragment;
 
     private long lastPressTime = System.currentTimeMillis();
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public int getLayout() {
