@@ -115,7 +115,7 @@ public class ProjectFragment extends BaseFragment implements HttpCallbackListene
     }
 
     @Override
-    public void onFinish(int requestId, String response) {
+    public void onFinish(int requestId, String response, String cookie) {
         try {
             if (response != null){
                 JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();

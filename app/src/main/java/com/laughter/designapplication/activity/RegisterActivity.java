@@ -85,7 +85,7 @@ public class RegisterActivity extends BaseActivity implements HttpCallbackListen
     }
 
     @Override
-    public void onFinish(int requestId, String response) {
+    public void onFinish(int requestId, String response, String cookie) {
         try {
             JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
             runOnUiThread(new Runnable() {

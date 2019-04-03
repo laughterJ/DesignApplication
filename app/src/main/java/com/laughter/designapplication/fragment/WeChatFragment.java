@@ -50,7 +50,7 @@ public class WeChatFragment extends BaseFragment implements HttpCallbackListener
     }
 
     @Override
-    public void onFinish(int requestId, String response) {
+    public void onFinish(int requestId, String response, String cookie) {
         try{
             JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
             if (jsonObj.get("errorCode").getAsInt() == 0){

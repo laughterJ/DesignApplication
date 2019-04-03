@@ -35,7 +35,7 @@ public class HttpUtil {
 
     private static String baseUrl = "https://www.wanandroid.com/";
 
-    public static void sendGetRequest(final String address, int requestId, final HttpCallbackListener listener){
+    public static void sendGetRequest(final String address, int requestId, final HttpCallbackListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -51,20 +51,20 @@ public class HttpUtil {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                     StringBuilder response = new StringBuilder();
                     String line;
-                    while((line = reader.readLine()) != null){
+                    while ((line = reader.readLine()) != null) {
                         response.append(line);
                     }
-                    if (listener != null){
-                        listener.onFinish(requestId, response.toString());
+                    if (listener != null) {
+                        listener.onFinish(requestId, response.toString(), null);
                     }
                     Log.d("coder", response.toString());
                 } catch (Exception e) {
                     e.printStackTrace();
-                    if (listener != null){
+                    if (listener != null) {
                         listener.onFailure(e);
                     }
-                }finally {
-                    if (connection != null){
+                } finally {
+                    if (connection != null) {
                         connection.disconnect();
                     }
                 }
@@ -72,7 +72,7 @@ public class HttpUtil {
         }).start();
     }
 
-    public static void sendHttpRequest(String address, String method, JsonObject paramsObj, int requestId, HttpCallbackListener listener){
+    public static void sendHttpRequest(String address, String method, JsonObject paramsObj, int requestId, HttpCallbackListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -80,50 +80,51 @@ public class HttpUtil {
                 try {
                     URL url = new URL(baseUrl + address);
                     Log.e("coder", url.toString());
-                    connection = (HttpURLConnection)url.openConnection();
+                    connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod(method);
                     connection.setReadTimeout(8000);
                     connection.setReadTimeout(8000);
-
-                    if (method.equals("POST")){
+                    if (method.equals("POST")) {
                         Log.e("coder", "【" + paramsObj.toString() + "】");
                         connection.setDoInput(true);
                         connection.setDoOutput(true);
 
                         StringBuilder params = new StringBuilder();
                         String[] keys = paramsObj.keySet().toArray(new String[0]);
-                        for(int i=0;i<keys.length;i++){
+                        for (int i = 0; i < keys.length; i++) {
                             params.append(keys[i]).append("=").append(paramsObj.get(keys[i]).getAsString());
-                            if (i < keys.length-1){
+                            if (i < keys.length - 1) {
                                 params.append("&");
                             }
                         }
-
-                        PrintWriter out = new PrintWriter(connection.getOutputStream());
-                        // 发送请求参数
-                        out.print(params.toString());
-                        // flush输出流的缓冲
-                        out.flush();
+                        Log.e("coder", params.toString());
+//                        PrintWriter out = new PrintWriter(connection.getOutputStream());
+//                        // 发送请求参数
+//                        out.print(params.toString());
+//                        // flush输出流的缓冲
+//                        out.flush();
+                        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                        writer.write(params.toString());
                     }
 
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                     StringBuilder response = new StringBuilder();
                     String line;
-                    while((line = reader.readLine()) != null){
+                    while ((line = reader.readLine()) != null) {
                         response.append(line);
                     }
-                    if (listener != null){
-                        listener.onFinish(requestId, response.toString());
+                    if (listener != null) {
+                        listener.onFinish(requestId, response.toString(), null);
                     }
                     Log.d("coder", response.toString());
                 } catch (Exception e) {
                     e.printStackTrace();
-                    if (listener != null){
+                    if (listener != null) {
                         listener.onFailure(e);
                     }
-                }finally {
-                    if (connection != null){
+                } finally {
+                    if (connection != null) {
                         connection.disconnect();
                     }
                 }
@@ -131,7 +132,7 @@ public class HttpUtil {
         }).start();
     }
 
-    public static void sendOkHttpRequest(final String address, okhttp3.Callback callback){
+    public static void sendOkHttpRequest(final String address, okhttp3.Callback callback) {
         OkHttpClient client = new OkHttpClient();
         Log.e("coder", baseUrl + address);
         Request request = new Request.Builder().url(baseUrl + address).build();

@@ -32,9 +32,11 @@
         </activity>
         <activity
             android:name=".activity.LoginActivity"
-            android:theme="@style/TranslateStatusBarTheme"/>
-        <activity android:name=".activity.RegisterActivity"
-            android:theme="@style/TranslateStatusBarTheme"/>
+            android:theme="@style/TranslateStatusBarTheme" />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:theme="@style/TranslateStatusBarTheme" />
+        <activity android:name=".activity.CollectionActivity"></activity>
     </application>
 
 </manifest>

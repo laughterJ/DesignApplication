@@ -16,6 +16,7 @@ public class Project {
     private String link;
     private String projectLink;
     private String niceDate;
+    private String id;
 
     public void setAuthor(String author) {
         this.author = author;
@@ -45,6 +46,10 @@ public class Project {
         this.desc = desc;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getDesc() {
         return desc;
     }
@@ -71,5 +76,9 @@ public class Project {
 
     public String getProjectLink() {
         return projectLink;
+    }
+
+    public String getId() {
+        return id;
     }
 }

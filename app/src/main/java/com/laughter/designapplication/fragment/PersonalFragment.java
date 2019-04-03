@@ -16,7 +16,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
+import com.laughter.designapplication.activity.CollectionActivity;
 import com.laughter.designapplication.activity.LoginActivity;
+import com.laughter.designapplication.activity.MainActivity;
 import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.framework.util.SpUtil;
 import com.laughter.framework.util.ToastUtil;
@@ -65,6 +67,13 @@ public class PersonalFragment extends BaseFragment implements HttpCallbackListen
             R.id.tv_username, R.id.tv_tag, R.id.img_profile_pic})
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.ll_collection:
+                if (SpUtil.getBoolean(mContext, "isLogin", false)){
+                    startActivity(new Intent(getActivity(), CollectionActivity.class));
+                }else {
+                    ToastUtil.showShortToast(mContext, "你还没有登陆噢");
+                }
+                break;
             case R.id.ll_log_off:
                 if (SpUtil.getBoolean(mContext, "isLogin", false)){
                     new AlertDialog.Builder(mContext)
@@ -100,13 +109,14 @@ public class PersonalFragment extends BaseFragment implements HttpCallbackListen
     }
 
     @Override
-    public void onFinish(int requestId, String response) {
+    public void onFinish(int requestId, String response, String cookie) {
         switch (requestId){
             case LOG_OFF:
                 ((Activity)mContext).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         SpUtil.putBoolean(mContext, "isLogin", false);
+                        SpUtil.putString(mContext,"Cookie", "");
                         initView();
                     }
                 });

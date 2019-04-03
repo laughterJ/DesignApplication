@@ -185,7 +185,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
     @Override
-    public void onFinish(int requestId, String response) {
+    public void onFinish(int requestId, String response, String cookie) {
         LitePal.deleteAll(Tree.class);
         try {
             if (response != null){

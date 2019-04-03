@@ -2,6 +2,7 @@ package com.laughter.designapplication.activity;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import com.google.gson.JsonParser;
 import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.util.HttpUtil;
+import com.laughter.designapplication.util.NewHttpUtil;
 import com.laughter.framework.util.SpUtil;
 import com.laughter.framework.util.ToastUtil;
 
@@ -52,8 +54,10 @@ public class LoginActivity extends BaseActivity implements HttpCallbackListener 
                 break;
             case R.id.tv_forgot_pass:
                 ToastUtil.showShortToast(this, "开发中...");
+                break;
             case R.id.but_sign_in:
                 login();
+                break;
             default:
                 break;
         }
@@ -75,11 +79,11 @@ public class LoginActivity extends BaseActivity implements HttpCallbackListener 
         JsonObject params = new JsonObject();
         params.addProperty("username", username);
         params.addProperty("password", password);
-        HttpUtil.sendHttpRequest("user/login", "POST", params, 0, this);
+        NewHttpUtil.post("user/login", 0, params, null, true, this);
     }
 
     @Override
-    public void onFinish(int requestId, String response) {
+    public void onFinish(int requestId, String response, String cookie) {
         JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
         runOnUiThread(new Runnable() {
             @Override
@@ -89,6 +93,7 @@ public class LoginActivity extends BaseActivity implements HttpCallbackListener 
                     SpUtil.putString(LoginActivity.this, "username", editUserName.getText().toString());
                     SpUtil.putString(LoginActivity.this, "password", editPassword.getText().toString());
                     SpUtil.putBoolean(LoginActivity.this, "isLogin", true);
+                    SpUtil.putString(LoginActivity.this, "Cookie", cookie);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                 }

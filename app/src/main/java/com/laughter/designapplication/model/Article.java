@@ -17,6 +17,7 @@ public class Article {
     @SerializedName("niceDate")
     private String date;
     private String link;
+    private String id;
 
     public Article(){
 
@@ -50,6 +51,10 @@ public class Article {
         return link;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -68,6 +73,10 @@ public class Article {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public class Tag {
