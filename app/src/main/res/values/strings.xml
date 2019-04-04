@@ -34,4 +34,5 @@
     <string name="author">关于作者</string>
     <string name="sign"><u>登陆/注册</u></string>
     <string name="log_off">退出登录</string>
+    <string name="collect">收藏文章</string>
 </resources>

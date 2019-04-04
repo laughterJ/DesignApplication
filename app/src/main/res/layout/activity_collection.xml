@@ -6,11 +6,23 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <include layout="@layout/toolbar"/>
 
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/srl_collection"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite">
 
+            <com.laughter.framework.views.RefreshListView
+                android:id="@+id/rlv_collection"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
     </LinearLayout>
 

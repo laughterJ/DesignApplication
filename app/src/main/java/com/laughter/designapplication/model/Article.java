@@ -18,6 +18,7 @@ public class Article {
     private String date;
     private String link;
     private String id;
+    private String chapterName;
 
     public Article(){
 
@@ -55,6 +56,10 @@ public class Article {
         return id;
     }
 
+    public String getChapterName() {
+        return chapterName;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -89,5 +94,9 @@ public class Article {
         public void setName(String name) {
             this.name = name;
         }
+    }
+
+    public void setChapterName(String chapterName) {
+        this.chapterName = chapterName;
     }
 }
