@@ -2,6 +2,7 @@ package com.laughter.designapplication.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
+import com.laughter.designapplication.activity.DetailActivity;
 import com.laughter.designapplication.model.Project;
 import com.laughter.designapplication.util.NewHttpUtil;
 import com.laughter.framework.util.SpUtil;
@@ -65,7 +67,10 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(mContext, DetailActivity.class);
+                intent.putExtra("title", project.getTitle());
+                intent.putExtra("link", project.getLink());
+                mContext.startActivity(intent);
             }
         });
 

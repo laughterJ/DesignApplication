@@ -1,11 +1,8 @@
 package com.laughter.designapplication.activity;
 
-import android.graphics.Color;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.widget.ArrayAdapter;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

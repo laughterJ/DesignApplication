@@ -1,38 +1,42 @@
 package com.laughter.designapplication.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
+import com.laughter.designapplication.activity.DetailActivity;
 import com.laughter.designapplication.adapter.ArticleAdapter;
 import com.laughter.designapplication.model.Article;
-import com.laughter.designapplication.util.HttpUtil;
+import com.laughter.designapplication.model.Banner;
 import com.laughter.designapplication.util.JsonUtil;
+import com.laughter.designapplication.util.NewHttpUtil;
+import com.laughter.framework.util.ToastUtil;
+import com.laughter.framework.views.BannerView;
 import com.laughter.framework.views.LoadingView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
-public class HomePageFragment extends BaseFragment implements Callback, OnRefreshListener, OnLoadMoreListener {
+public class HomePageFragment extends BaseFragment implements OnRefreshListener, OnLoadMoreListener,
+        HttpCallbackListener, BannerView.OnItemClickListener {
+
+    @BindView(R.id.banner_view)
+    BannerView mBannerView;
 
     @BindView(R.id.srl)
     SmartRefreshLayout mRefreshLayout;
@@ -46,6 +50,12 @@ public class HomePageFragment extends BaseFragment implements Callback, OnRefres
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
+    private final static int BANNER_REQUEST_ID = 0;
+    private final static int ARTICLE_REQUEST_ID = 1;
+
+    private List<Banner> banners;
+    private List<String> imgs;
+    private List<String> titles;
     private List<Article> mArticleList;
     private ArticleAdapter mAdapter;
 
@@ -64,6 +74,8 @@ public class HomePageFragment extends BaseFragment implements Callback, OnRefres
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setOnLoadMoreListener(this);
 
+        mBannerView.setOnItemClickListener(this);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mArticleList = new ArrayList<>();
         mAdapter = new ArticleAdapter(mContext, mArticleList);
@@ -72,43 +84,54 @@ public class HomePageFragment extends BaseFragment implements Callback, OnRefres
 
     @Override
     public void initData() {
+        banners = new ArrayList<>();
+        imgs = new ArrayList<>();
+        titles = new ArrayList<>();
+        NewHttpUtil.get("banner/json", BANNER_REQUEST_ID, null, this);
         curPage = 0;
-        HttpUtil.sendOkHttpRequest("article/list/" +curPage + "/json", this);
+        NewHttpUtil.get("article/list/" +curPage + "/json", ARTICLE_REQUEST_ID, null, this);
         mLoadingView.start();
         mLoadingView.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void onFailure(@NonNull Call call, @NonNull IOException e) {
-        e.printStackTrace();
-    }
-
-    @Override
-    public void onResponse(@NonNull Call call, @NonNull Response response) {
-        try {
-            if (response.body() != null){
-                String jsonData = response.body().string();
-                JsonObject jsonObj = new JsonParser().parse(jsonData).getAsJsonObject();
+    public void onFinish(int requestId, String response, String cookie) {
+        try{
+            ((Activity)mContext).runOnUiThread(() -> {
+                JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
                 if (jsonObj.get("errorCode").getAsInt() == 0){
-                    mArticleList.addAll(JsonUtil.getArticles(jsonObj));
-                }else {
-                    Toast.makeText(mContext, jsonObj.get("errorMsg").getAsString(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            ((Activity)mContext).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.notifyDataSetChanged();
+                    if (requestId == BANNER_REQUEST_ID){
+                        banners.addAll(JsonUtil.getBanners(jsonObj));
+                        for(int i=0;i<banners.size();i++){
+                            imgs.add(banners.get(i).getImagePath());
+                            titles.add(banners.get(i).getTitle());
+                        }
+                        mBannerView.setImageUrl(imgs);
+                        mBannerView.setTitle(titles);
+                        mBannerView.setmIndicaterStyle(R.drawable.dot_bg_selector);
+                        mBannerView.build();
+                    }
+                    if (requestId == ARTICLE_REQUEST_ID){
+                        mArticleList.addAll(JsonUtil.getArticles(jsonObj));
+                        mAdapter.notifyDataSetChanged();
+                        mBannerView.setVisibility(View.VISIBLE);
+                    }
                     mLoadingView.cancle();
                     mLoadingView.setVisibility(View.GONE);
                     mRefreshLayout.finishLoadMore();
                     mRefreshLayout.finishRefresh();
+                }else {
+                    ToastUtil.showShortToast(mContext, jsonObj.get("errorMsg").getAsString());
                 }
             });
+        }catch (Exception e){
+            e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onFailure(Exception e) {
+        e.printStackTrace();
     }
 
     @Override
@@ -116,12 +139,20 @@ public class HomePageFragment extends BaseFragment implements Callback, OnRefres
         mArticleList.clear();
         mAdapter.notifyDataSetChanged();
         curPage = 0;
-        HttpUtil.sendOkHttpRequest("article/list/" +curPage + "/json", this);
+        NewHttpUtil.get("article/list/" +curPage + "/json", ARTICLE_REQUEST_ID, null, this);
     }
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
         ++curPage;
-        HttpUtil.sendOkHttpRequest("article/list/" +curPage + "/json", HomePageFragment.this);
+        NewHttpUtil.get("article/list/" +curPage + "/json", ARTICLE_REQUEST_ID, null, HomePageFragment.this);
+    }
+
+    @Override
+    public void onItemClick(int index) {
+        Intent intent = new Intent(mContext, DetailActivity.class);
+        intent.putExtra("title", titles.get(index));
+        intent.putExtra("link", banners.get(index).getUrl());
+        mContext.startActivity(intent);
     }
 }

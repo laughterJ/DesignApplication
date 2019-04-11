@@ -1,7 +1,7 @@
 package com.laughter.designapplication.adapter;
 
 import android.content.Context;
-import android.graphics.Paint;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import com.google.android.flexbox.FlexboxLayout;
 import com.laughter.designapplication.R;
+import com.laughter.designapplication.activity.KnowledgeActivity;
 import com.laughter.designapplication.model.Tree;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindColor;
@@ -26,18 +28,18 @@ import butterknife.ButterKnife;
  * 描述： com.laughter.designapplication.adapter
  */
 public class TreesAdapter extends RecyclerView.Adapter<TreesAdapter.ViewHolder> {
-    private Context mContet;
+    private Context mContext;
     private List<Tree> trees;
 
     public TreesAdapter(Context context, List<Tree> trees) {
-        this.mContet = context;
+        this.mContext = context;
         this.trees = trees;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContet).inflate(R.layout.item_trees, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_trees, parent, false);
         return new ViewHolder(view);
     }
 
@@ -47,21 +49,28 @@ public class TreesAdapter extends RecyclerView.Adapter<TreesAdapter.ViewHolder> 
         viewHolder.tvTitle.setText(mTree.getName());
         viewHolder.fblLabel.removeAllViews();
         int index = 0;
-        while (index < mTree.getChildTrsss().size() && index < 6){
-            TextView tvLabel = new TextView(mContet);
-            tvLabel.setText(mTree.getChildTrsss().get(index++).getName());
+        while (index < mTree.getChildTrees().size() && index < 6){
+            TextView tvLabel = new TextView(mContext);
+            tvLabel.setText(mTree.getChildTrees().get(index++).getName());
             tvLabel.setTextSize(16);
             tvLabel.setTextColor(viewHolder.colorWeakBlack);
             tvLabel.setPadding(0, 0, 32, 0);
             viewHolder.fblLabel.addView(tvLabel);
         }
-        if (index < mTree.getChildTrsss().size()){
-            TextView tvLabel = new TextView(mContet);
+        if (index < mTree.getChildTrees().size()){
+            TextView tvLabel = new TextView(mContext);
             tvLabel.setText("...");
             tvLabel.setTextSize(16);
             tvLabel.setTextColor(viewHolder.colorWeakBlack);
             viewHolder.fblLabel.addView(tvLabel);
         }
+
+        viewHolder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, KnowledgeActivity.class);
+            intent.putParcelableArrayListExtra("items", new ArrayList<>(mTree.getChildTrees()));
+            intent.putExtra("title", mTree.getName());
+            mContext.startActivity(intent);
+        });
     }
 
     @Override
@@ -75,8 +84,11 @@ public class TreesAdapter extends RecyclerView.Adapter<TreesAdapter.ViewHolder> 
         @BindView(R.id.fbl_label) FlexboxLayout fblLabel;
         @BindColor(R.color.colorWeakBlack) int colorWeakBlack;
 
+        View itemView;
+
         ViewHolder(@NonNull View itemView) {
             super(itemView);
+            this.itemView = itemView;
             ButterKnife.bind(this, itemView);
         }
     }

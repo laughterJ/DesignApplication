@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.laughter.designapplication.model.Article;
+import com.laughter.designapplication.model.Banner;
 import com.laughter.designapplication.model.OfficialAccount;
 import com.laughter.designapplication.model.Project;
 import com.laughter.designapplication.model.Tree;
@@ -19,6 +20,15 @@ import java.util.List;
  * 描述： com.laughter.designapplication.util
  */
 public class JsonUtil {
+
+    public static List<Banner> getBanners(JsonObject jsonObj) {
+        List<Banner> banners = null;
+        if (jsonObj.get("data").getClass() == JsonArray.class){
+            JsonArray data = jsonObj.getAsJsonArray("data");
+            banners = new Gson().fromJson(data, new TypeToken<List<Banner>>(){}.getType());
+        }
+        return banners;
+    }
 
     public static List<Article> getArticles(JsonObject jsonObj) {
         List<Article> articles = null;

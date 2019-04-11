@@ -2,16 +2,13 @@ package com.laughter.designapplication.activity;
 
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
-import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.designapplication.util.NewHttpUtil;
 import com.laughter.framework.util.SpUtil;
 import com.laughter.framework.util.ToastUtil;

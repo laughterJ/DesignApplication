@@ -3,6 +3,7 @@ package com.laughter.designapplication.adapter;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
+import com.laughter.designapplication.activity.DetailActivity;
+import com.laughter.designapplication.activity.MainActivity;
 import com.laughter.designapplication.model.Article;
 import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.designapplication.util.NewHttpUtil;
@@ -66,23 +69,20 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         }
         viewHolder.tvDate.setText(article.getDate());
 
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
+        viewHolder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, DetailActivity.class);
+            intent.putExtra("title", article.getTitle());
+            intent.putExtra("link", article.getLink());
+            mContext.startActivity(intent);
         });
-        viewHolder.ibLike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (SpUtil.getBoolean(mContext, "isLogin", false)){
-                    viewHolder.ibLike.setBackground(viewHolder.icCollected);
-                    String path = "lg/collect/" + article.getId() + "/json";
-                    String localCookie = SpUtil.getString(mContext, "Cookie", null);
-                    NewHttpUtil.post(path, 0, null, localCookie, false, ArticleAdapter.this);
-                }else {
-                    ToastUtil.showShortToast(mContext, "请先登录");
-                }
+        viewHolder.ibLike.setOnClickListener(v -> {
+            if (SpUtil.getBoolean(mContext, "isLogin", false)){
+                viewHolder.ibLike.setBackground(viewHolder.icCollected);
+                String path = "lg/collect/" + article.getId() + "/json";
+                String localCookie = SpUtil.getString(mContext, "Cookie", null);
+                NewHttpUtil.post(path, 0, null, localCookie, false, ArticleAdapter.this);
+            }else {
+                ToastUtil.showShortToast(mContext, "请先登录");
             }
         });
     }

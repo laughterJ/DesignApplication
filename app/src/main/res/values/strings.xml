@@ -35,4 +35,5 @@
     <string name="sign"><u>登陆/注册</u></string>
     <string name="log_off">退出登录</string>
     <string name="collect">收藏文章</string>
+    <string name="ending">----我是有底线的----</string>
 </resources>

@@ -36,7 +36,9 @@
         <activity
             android:name=".activity.RegisterActivity"
             android:theme="@style/TranslateStatusBarTheme" />
-        <activity android:name=".activity.CollectionActivity"></activity>
+        <activity android:name=".activity.CollectionActivity" />
+        <activity android:name=".activity.DetailActivity" />
+        <activity android:name=".activity.KnowledgeActivity"></activity>
     </application>
 
 </manifest>

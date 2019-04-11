@@ -23,10 +23,10 @@ import java.util.Map;
  */
 public class NewHttpUtil {
     private static final String baseUrl = "https://www.wanandroid.com/";
-    private static HttpURLConnection connection = null;
 
     public static void get(final String path, final int requestId, final String localCookie, final HttpCallbackListener listener) {
         new Thread(() -> {
+            HttpURLConnection connection = null;
             try {
                 URL url = new URL(baseUrl + path);
                 Log.e("coder", url.toString());
@@ -34,7 +34,9 @@ public class NewHttpUtil {
                 connection.setRequestMethod("GET");
                 connection.setConnectTimeout(8000);
                 connection.setReadTimeout(8000);
-                connection.setRequestProperty("Cookie", localCookie);
+                if (localCookie != null) {
+                    connection.setRequestProperty("Cookie", localCookie);
+                }
 
                 InputStreamReader in = new InputStreamReader(connection.getInputStream());
                 BufferedReader reader = new BufferedReader(in);
@@ -62,6 +64,7 @@ public class NewHttpUtil {
 
     public static void post(final String path, final int requestId, final JsonObject params, final String localCookie, final boolean saveCookie, final HttpCallbackListener listener) {
         new Thread(() -> {
+            HttpURLConnection connection = null;
             try {
                 URL url = new URL(baseUrl + path);
                 Log.e("coder", url.toString());
