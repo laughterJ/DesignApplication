@@ -1,12 +1,8 @@
 package com.laughter.designapplication.model;
 
-import org.litepal.crud.LitePalSupport;
-
 /**
- * 作者： 江浩
- * 创建时间： 2019/3/14
- * 版权： 江苏远大信息股份有限公司
- * 描述： com.laughter.designapplication.model
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.model
  */
 public class Project {
     private String author;

@@ -6,15 +6,11 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
-import com.laughter.framework.OnLoadMoreListener;
-
 /**
- * 作者： 江浩
- * 创建时间： 2019/4/4
- * 版权： 江苏远大信息股份有限公司
- * 描述： com.laughter.framework.views
+ * created by JH at 2019/4/11
+ * des： com.laughter.framework.views
  */
-public class RefreshListView extends ListView implements AbsListView.OnScrollListener {
+public class LoadingListView extends ListView implements AbsListView.OnScrollListener {
 
     private int mTotalItemCount;//item总数
     private boolean isLoading;
@@ -22,15 +18,15 @@ public class RefreshListView extends ListView implements AbsListView.OnScrollLis
 
     private View mLoadingView;
 
-    public RefreshListView(Context context) {
+    public LoadingListView(Context context) {
         this(context, null);
     }
 
-    public RefreshListView(Context context, AttributeSet attrs) {
+    public LoadingListView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public RefreshListView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public LoadingListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -70,5 +66,9 @@ public class RefreshListView extends ListView implements AbsListView.OnScrollLis
     public void addFooterView(View v) {
         mLoadingView = v;
         super.addFooterView(mLoadingView);
+    }
+
+    public interface OnLoadMoreListener {
+        public void onLoadMore();
     }
 }

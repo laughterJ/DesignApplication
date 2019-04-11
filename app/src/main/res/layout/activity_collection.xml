@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:background="@color/colorWhite">
 
-            <com.laughter.framework.views.RefreshListView
+            <com.laughter.framework.views.LoadingListView
                 android:id="@+id/rlv_collection"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

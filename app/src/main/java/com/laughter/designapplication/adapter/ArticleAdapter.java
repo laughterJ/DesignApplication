@@ -1,28 +1,23 @@
 package com.laughter.designapplication.adapter;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.activity.DetailActivity;
-import com.laughter.designapplication.activity.MainActivity;
 import com.laughter.designapplication.model.Article;
-import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.designapplication.util.NewHttpUtil;
 import com.laughter.framework.util.SpUtil;
 import com.laughter.framework.util.ToastUtil;
@@ -34,10 +29,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 作者： 江浩
- * 创建时间： 2018/12/21
- * 版权： 江苏远大信息股份有限公司
- * 描述： com.laughter.network.adapter
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.adapter
  */
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> implements HttpCallbackListener {
 

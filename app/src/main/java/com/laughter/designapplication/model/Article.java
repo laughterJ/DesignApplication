@@ -5,9 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * 作者： 江浩
- * 创建时间： 2018/12/21
- * 描述： com.laughter.network
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.model
  */
 public class Article {
 

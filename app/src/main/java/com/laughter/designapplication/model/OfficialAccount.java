@@ -1,9 +1,8 @@
 package com.laughter.designapplication.model;
 
 /**
- * 作者： 江浩
- * 创建时间： 2019/3/21
- * 描述： com.laughter.designapplication.model
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.model
  */
 public class OfficialAccount {
     private int id;

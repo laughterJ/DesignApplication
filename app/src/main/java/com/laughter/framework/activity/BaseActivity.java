@@ -1,4 +1,4 @@
-package com.laughter.designapplication.activity;
+package com.laughter.framework.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,10 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import butterknife.ButterKnife;
 
 /**
- * 作者： 江浩
- * 创建时间： 2018/12/11
- * 描述： com.example.designapplication.activity
+ * created by JH at 2019/4/11
+ * des： com.laughter.framework.activity
  */
+
 public abstract class BaseActivity extends AppCompatActivity {
 
     @Override

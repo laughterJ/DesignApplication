@@ -14,11 +14,10 @@ import android.view.View;
 import com.laughter.designapplication.R;
 
 /**
- * 作者： 江浩
- * 创建时间： 2019/2/20
- * 版权： 江苏远大信息股份有限公司
- * 描述： com.laughter.framework.views
+ * created by JH at 2019/4/11
+ * des： com.laughter.framework.views
  */
+
 public class LoadingView extends View {
 
     private Paint bottomPaint, surfacePaint;

@@ -22,15 +22,15 @@ import com.laughter.designapplication.fragment.PersonalFragment;
 import com.laughter.designapplication.model.Tree;
 import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.designapplication.util.JsonUtil;
+import com.laughter.framework.activity.BaseActivity;
 
 import org.litepal.LitePal;
 
 import butterknife.BindView;
 
 /**
- * 作者： 江浩
- * 创建时间： 2018/12/11
- * 描述： com.example.designapplication.activity
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.activity
  */
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, HttpCallbackListener {

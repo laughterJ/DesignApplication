@@ -20,6 +20,7 @@ import com.laughter.designapplication.adapter.TreesAdapter;
 import com.laughter.designapplication.model.Tree;
 import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.designapplication.util.JsonUtil;
+import com.laughter.framework.fragment.BaseFragment;
 import com.laughter.framework.views.LoadingView;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,6 +31,11 @@ import butterknife.BindView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+
+/**
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.fragment
+ */
 
 public class KnowledgeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, Callback {
 

@@ -8,11 +8,17 @@ import com.laughter.designapplication.R;
 import com.laughter.designapplication.adapter.TabberAdapter;
 import com.laughter.designapplication.fragment.ArticleListFragment;
 import com.laughter.designapplication.model.Tree;
+import com.laughter.framework.activity.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
+/**
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.activity
+ */
 
 public class KnowledgeActivity extends BaseActivity {
 

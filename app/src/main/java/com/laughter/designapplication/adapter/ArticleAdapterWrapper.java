@@ -4,12 +4,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-
 /**
- * 作者： 江浩
- * 创建时间： 2019/2/27
- * 版权： 江苏远大信息股份有限公司
- * 描述： com.laughter.test
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.adapter
  */
 public class ArticleAdapterWrapper extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

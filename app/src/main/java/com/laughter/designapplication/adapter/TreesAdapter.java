@@ -22,10 +22,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 作者： 江浩
- * 创建时间： 2019/3/8
- * 版权： 江苏远大信息股份有限公司
- * 描述： com.laughter.designapplication.adapter
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.adapter
  */
 public class TreesAdapter extends RecyclerView.Adapter<TreesAdapter.ViewHolder> {
     private Context mContext;

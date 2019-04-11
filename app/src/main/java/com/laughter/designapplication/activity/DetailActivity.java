@@ -6,16 +6,15 @@ import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
 
 import com.laughter.designapplication.R;
+import com.laughter.framework.activity.BaseActivity;
 import com.laughter.framework.views.ProgressWebView;
 
 import butterknife.BindDrawable;
 import butterknife.BindView;
 
 /**
- * 作者： 江浩
- * 创建时间： 2019/4/8
- * 版权： 江苏远大信息股份有限公司
- * 描述： com.laughter.designapplication.activity
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.activity
  */
 public class DetailActivity extends BaseActivity {
 

@@ -14,12 +14,18 @@ import com.laughter.designapplication.adapter.TabberAdapter;
 import com.laughter.designapplication.model.OfficialAccount;
 import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.designapplication.util.JsonUtil;
+import com.laughter.framework.fragment.BaseFragment;
 import com.laughter.framework.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
+/**
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.fragment
+ */
 
 public class WeChatFragment extends BaseFragment implements HttpCallbackListener {
 

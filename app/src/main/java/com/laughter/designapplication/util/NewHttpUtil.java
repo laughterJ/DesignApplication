@@ -16,11 +16,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 作者： 江浩
- * 创建时间： 2019/3/29
- * 版权： 江苏远大信息股份有限公司
- * 描述： com.laughter.designapplication.util
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.util
  */
+
 public class NewHttpUtil {
     private static final String baseUrl = "https://www.wanandroid.com/";
 

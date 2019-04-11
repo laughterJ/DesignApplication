@@ -24,6 +24,7 @@ import com.laughter.designapplication.model.Project;
 import com.laughter.designapplication.model.Tree;
 import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.designapplication.util.JsonUtil;
+import com.laughter.framework.fragment.BaseFragment;
 import com.laughter.framework.views.LoadingView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -36,6 +37,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
+/**
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.fragment
+ */
 
 public class ProjectFragment extends BaseFragment implements HttpCallbackListener, OnRefreshListener, OnLoadMoreListener {
 

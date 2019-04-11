@@ -26,11 +26,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
 /**
- * 作者： 江浩
- * 创建时间： 2018/12/21
- * 版权： 江苏远大信息股份有限公司
- * 描述： com.laughter.network.util
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.util
  */
+
 public class HttpUtil {
 
     private static String baseUrl = "https://www.wanandroid.com/";

@@ -3,14 +3,11 @@ package com.laughter.framework.util;
 import android.content.Context;
 
 /**
- * 作者： 王一凡
- * 创建时间： 2017/9/7
- * 版权： 江苏远大信息股份有限公司
- * 描述： com.sinoyd.frame.views 像素-dip转换工具
+ * created by JH at 2019/4/11
+ * des： com.laughter.framework.util
  */
+
 public class DensityUtil {
-    public DensityUtil() {
-    }
 
     public static int dip2px(Context con, float dpValue) {
         float scale = con.getResources().getDisplayMetrics().density;

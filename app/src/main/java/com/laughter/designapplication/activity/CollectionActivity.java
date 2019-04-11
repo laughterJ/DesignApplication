@@ -12,10 +12,10 @@ import com.laughter.designapplication.adapter.CollectionAdapter;
 import com.laughter.designapplication.model.Article;
 import com.laughter.designapplication.util.JsonUtil;
 import com.laughter.designapplication.util.NewHttpUtil;
-import com.laughter.framework.OnLoadMoreListener;
+import com.laughter.framework.activity.BaseActivity;
 import com.laughter.framework.util.SpUtil;
 import com.laughter.framework.util.ToastUtil;
-import com.laughter.framework.views.RefreshListView;
+import com.laughter.framework.views.LoadingListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +23,16 @@ import java.util.List;
 import butterknife.BindColor;
 import butterknife.BindView;
 
-public class CollectionActivity extends BaseActivity implements OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener, HttpCallbackListener {
+/**
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.activity
+ */
+
+public class CollectionActivity extends BaseActivity implements LoadingListView.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener, HttpCallbackListener {
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
-    @BindView(R.id.rlv_collection) RefreshListView mListView;
+    @BindView(R.id.rlv_collection)
+    LoadingListView mListView;
     @BindView(R.id.srl_collection) SwipeRefreshLayout mRefreshLayout;
 
     @BindColor(R.color.colorPrimary) int primaryColor;

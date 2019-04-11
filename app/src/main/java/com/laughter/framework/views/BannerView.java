@@ -21,12 +21,12 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- * 作者： 江浩
- * 创建时间： 2019/4/10
- * 版权： 江苏远大信息股份有限公司
- * 描述： com.sinoyd.functiontest.views
+ * created by JH at 2019/4/11
+ * des： com.laughter.framework.views
  */
+
 public class BannerView extends FrameLayout implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
     // 使用ViewPager显示图片
@@ -135,6 +135,7 @@ public class BannerView extends FrameLayout implements ViewPager.OnPageChangeLis
     public void setScrollDelayTime(long delayTime) {
         mBannerScrollDelayTime = delayTime;
     }
+
     // 设置点击事件监听
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mOnItemClickListener = listener;

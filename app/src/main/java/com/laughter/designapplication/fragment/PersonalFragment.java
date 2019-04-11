@@ -1,7 +1,6 @@
 package com.laughter.designapplication.fragment;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -18,14 +17,19 @@ import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.activity.CollectionActivity;
 import com.laughter.designapplication.activity.LoginActivity;
-import com.laughter.designapplication.activity.MainActivity;
 import com.laughter.designapplication.util.HttpUtil;
+import com.laughter.framework.fragment.BaseFragment;
 import com.laughter.framework.util.SpUtil;
 import com.laughter.framework.util.ToastUtil;
 
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.OnClick;
+
+/**
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.fragment
+ */
 
 public class PersonalFragment extends BaseFragment implements HttpCallbackListener,
         DialogInterface.OnClickListener {

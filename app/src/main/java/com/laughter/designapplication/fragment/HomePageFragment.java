@@ -19,6 +19,7 @@ import com.laughter.designapplication.model.Article;
 import com.laughter.designapplication.model.Banner;
 import com.laughter.designapplication.util.JsonUtil;
 import com.laughter.designapplication.util.NewHttpUtil;
+import com.laughter.framework.fragment.BaseFragment;
 import com.laughter.framework.util.ToastUtil;
 import com.laughter.framework.views.BannerView;
 import com.laughter.framework.views.LoadingView;
@@ -31,6 +32,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
+/**
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.fragment
+ */
 
 public class HomePageFragment extends BaseFragment implements OnRefreshListener, OnLoadMoreListener,
         HttpCallbackListener, BannerView.OnItemClickListener {

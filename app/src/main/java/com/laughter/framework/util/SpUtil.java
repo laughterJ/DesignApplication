@@ -5,11 +5,10 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 /**
- * 作者： 江浩
- * 创建时间： 2019/3/18
- * 版权： 江苏远大信息股份有限公司
- * 描述： com.laughter.framework
+ * created by JH at 2019/4/11
+ * des： com.laughter.framework.util
  */
+
 public class SpUtil {
 
     public static void putString(Context context, String key, String val){

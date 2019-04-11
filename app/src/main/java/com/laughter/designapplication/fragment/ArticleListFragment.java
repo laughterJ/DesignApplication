@@ -15,7 +15,7 @@ import com.laughter.designapplication.adapter.ArticleAdapter;
 import com.laughter.designapplication.model.Article;
 import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.designapplication.util.JsonUtil;
-import com.laughter.framework.views.BannerView;
+import com.laughter.framework.fragment.BaseFragment;
 import com.laughter.framework.views.LoadingView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -30,6 +30,11 @@ import butterknife.BindView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+
+/**
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.fragment
+ */
 
 public class ArticleListFragment extends BaseFragment implements OnRefreshListener, OnLoadMoreListener, Callback {
 

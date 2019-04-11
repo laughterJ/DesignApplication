@@ -8,14 +8,11 @@ import com.google.gson.annotations.SerializedName;
 import org.litepal.crud.LitePalSupport;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
- * 作者： 江浩
- * 创建时间： 2019/3/8
- * 版权： 江苏远大信息股份有限公司
- * 描述： com.laughter.designapplication.model
+ * created by JH at 2019/4/11
+ * des： com.laughter.designapplication.model
  */
 public class Tree extends LitePalSupport implements Parcelable {
 
