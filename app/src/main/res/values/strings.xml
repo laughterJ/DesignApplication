@@ -36,4 +36,11 @@
     <string name="log_off">退出登录</string>
     <string name="collect">收藏文章</string>
     <string name="ending">----我是有底线的----</string>
+    <string name="des">写下要做的事情...</string>
+    <string name="cancle">取消</string>
+    <string name="save">保存</string>
+    <string name="deadline">期限</string>
+    <string name="property_1">紧急</string>
+    <string name="property_2">一般</string>
+    <string name="property_3">暂缓</string>
 </resources>

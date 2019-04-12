@@ -17,6 +17,7 @@ import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.activity.CollectionActivity;
 import com.laughter.designapplication.activity.LoginActivity;
+import com.laughter.designapplication.activity.TodoListActivity;
 import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.framework.fragment.BaseFragment;
 import com.laughter.framework.util.SpUtil;
@@ -73,9 +74,16 @@ public class PersonalFragment extends BaseFragment implements HttpCallbackListen
         switch (v.getId()){
             case R.id.ll_collection:
                 if (SpUtil.getBoolean(mContext, "isLogin", false)){
-                    startActivity(new Intent(getActivity(), CollectionActivity.class));
+                    startActivity(new Intent(mContext, CollectionActivity.class));
                 }else {
-                    ToastUtil.showShortToast(mContext, "你还没有登陆噢");
+                    startActivity(new Intent(mContext, LoginActivity.class));
+                }
+                break;
+            case R.id.ll_todo:
+                if (SpUtil.getBoolean(mContext, "isLogin", false)){
+                    startActivity(new Intent(mContext, TodoListActivity.class));
+                }else {
+                    startActivity(new Intent(mContext, LoginActivity.class));
                 }
                 break;
             case R.id.ll_log_off:

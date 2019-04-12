@@ -1,0 +1,101 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/tv_cancle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="4dp"
+        android:foreground="?android:selectableItemBackgroundBorderless"
+        android:textColor="@color/colorWeakBlack"
+        android:text="@string/cancle"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/tv_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:foreground="?android:selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="4dp"
+        android:textColor="@color/colorPrimary"
+        android:text="@string/save"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/et_list_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:background="@null"
+        android:hint="@string/des"
+        android:padding="8dp"
+        android:inputType="text"
+        android:textColor="@color/colorTextBlack"
+        android:textSize="18sp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_view"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_deadline"
+            android:contentDescription="@string/todo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/deadline"
+            android:textSize="15sp"/>
+
+        <RadioGroup
+            android:id="@+id/rg_property"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp">
+
+            <RadioButton
+                android:id="@+id/rb_first"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="@string/property_1"
+                android:buttonTint="@color/colorRed"
+                android:textColor="@color/colorWeakBlack"/>
+
+            <RadioButton
+                android:id="@+id/rb_second"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="@string/property_2"
+                android:buttonTint="@color/colorOrange"
+                android:textColor="@color/colorWeakBlack"/>
+
+            <RadioButton
+                android:id="@+id/rx_third"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="@string/property_3"
+                android:buttonTint="@color/colorYellow"
+                android:textColor="@color/colorWeakBlack"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+</FrameLayout>
