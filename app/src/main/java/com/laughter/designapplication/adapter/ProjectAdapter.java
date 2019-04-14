@@ -21,7 +21,7 @@ import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.activity.DetailActivity;
 import com.laughter.designapplication.model.Project;
-import com.laughter.designapplication.util.NewHttpUtil;
+import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.framework.util.SpUtil;
 import com.laughter.framework.util.ToastUtil;
 
@@ -79,7 +79,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
                     viewHolder.ibLike.setBackground(viewHolder.icCollected);
                     String path = "lg/collect/" + project.getId() + "/json";
                     String localCookie = SpUtil.getString(mContext, "Cookie", null);
-                    NewHttpUtil.post(path, 0, null, localCookie, false, ProjectAdapter.this);
+                    HttpUtil.post(path, 0, null, localCookie, false, ProjectAdapter.this);
                 }else {
                     ToastUtil.showShortToast(mContext, "请先登录");
                 }

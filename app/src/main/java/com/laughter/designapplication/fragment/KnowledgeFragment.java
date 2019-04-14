@@ -1,12 +1,10 @@
 package com.laughter.designapplication.fragment;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,29 +13,26 @@ import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.adapter.TreesAdapter;
 import com.laughter.designapplication.model.Tree;
-import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.designapplication.util.JsonUtil;
+import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.framework.fragment.BaseFragment;
 import com.laughter.framework.views.LoadingView;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindColor;
 import butterknife.BindView;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 /**
  * created by JH at 2019/4/11
  * des： com.laughter.designapplication.fragment
  */
 
-public class KnowledgeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, Callback {
+public class KnowledgeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, HttpCallbackListener {
 
     @BindView(R.id.srl_tree) SwipeRefreshLayout srlTree;
     @BindView(R.id.rl_tree) RecyclerView rlTree;
@@ -78,48 +73,41 @@ public class KnowledgeFragment extends BaseFragment implements SwipeRefreshLayou
 
         mLoadingView.start();
         mLoadingView.setVisibility(View.VISIBLE);
-        HttpUtil.sendOkHttpRequest("tree/json", this);
+        HttpUtil.get("tree/json", 0, null, this);
     }
 
     @Override
     public void onRefresh() {
         trees.clear();
         mAdapter.notifyDataSetChanged();
-        HttpUtil.sendOkHttpRequest("tree/json", this);
+        HttpUtil.get("tree/json", 0, null, this);
     }
 
     @Override
-    public void onResponse(@NonNull Call call, @NonNull Response response){
+    public void onFinish(int requestId, String response, String cookie) {
         try{
-            if (response.body() != null){
-                String jsonData = response.body().string();
-                JsonObject jsonObj = new JsonParser().parse(jsonData).getAsJsonObject();
-                Log.e("coder", jsonObj.get("errorCode").getAsInt()+"");
-                if (jsonObj.get("errorCode").getAsInt() == 0){
-                    trees.addAll(JsonUtil.getTrees(jsonObj));
-                }else {
-                    Toast.makeText(mContext, jsonObj.get("errorMsg").getAsString(), Toast.LENGTH_SHORT).show();
-                }
+            JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
+            if (jsonObj.get("errorCode").getAsInt() == 0){
+                trees.addAll(JsonUtil.getTrees(jsonObj));
+            }else {
+                Toast.makeText(mContext, jsonObj.get("errorMsg").getAsString(), Toast.LENGTH_SHORT).show();
             }
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            ((Activity)mContext).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mLoadingView.setVisibility(View.GONE);
-                    mLoadingView.cancle();
-                    if (srlTree.isRefreshing()){
-                        srlTree.setRefreshing(false);
-                    }
-                    mAdapter.notifyDataSetChanged();
+            ((Activity)mContext).runOnUiThread(() -> {
+                mLoadingView.setVisibility(View.GONE);
+                mLoadingView.cancle();
+                if (srlTree.isRefreshing()){
+                    srlTree.setRefreshing(false);
                 }
+                mAdapter.notifyDataSetChanged();
             });
         }
     }
 
     @Override
-    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+    public void onFailure(Exception e) {
 
     }
 }

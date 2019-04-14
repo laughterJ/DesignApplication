@@ -11,7 +11,7 @@ import com.laughter.designapplication.R;
 import com.laughter.designapplication.adapter.CollectionAdapter;
 import com.laughter.designapplication.model.Article;
 import com.laughter.designapplication.util.JsonUtil;
-import com.laughter.designapplication.util.NewHttpUtil;
+import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.framework.activity.BaseActivity;
 import com.laughter.framework.util.SpUtil;
 import com.laughter.framework.util.ToastUtil;
@@ -66,7 +66,7 @@ public class CollectionActivity extends BaseActivity implements LoadingListView.
         curPage = 0;
         String path = "lg/collect/list/" + curPage + "/json";
         String localCookie = SpUtil.getString(this, "Cookie", null);
-        NewHttpUtil.get(path, 0, localCookie, this);
+        HttpUtil.get(path, 0, localCookie, this);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class CollectionActivity extends BaseActivity implements LoadingListView.
         curPage = 0;
         String path = "lg/collect/list/" + curPage + "/json";
         String localCookie = SpUtil.getString(this, "Cookie", null);
-        NewHttpUtil.get(path, 0, localCookie, this);
+        HttpUtil.get(path, 0, localCookie, this);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class CollectionActivity extends BaseActivity implements LoadingListView.
         curPage++;
         String path = "lg/collect/list/" + curPage + "/json";
         String localCookie = SpUtil.getString(this, "Cookie", null);
-        NewHttpUtil.get(path, 0, localCookie, this);
+        HttpUtil.get(path, 0, localCookie, this);
     }
 
     @Override

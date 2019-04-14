@@ -10,11 +10,12 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.adapter.ArticleAdapter;
 import com.laughter.designapplication.model.Article;
-import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.designapplication.util.JsonUtil;
+import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.framework.fragment.BaseFragment;
 import com.laughter.framework.views.LoadingView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -22,21 +23,18 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 /**
  * created by JH at 2019/4/11
  * des： com.laughter.designapplication.fragment
  */
 
-public class ArticleListFragment extends BaseFragment implements OnRefreshListener, OnLoadMoreListener, Callback {
+public class ArticleListFragment extends BaseFragment implements OnRefreshListener,
+        OnLoadMoreListener, HttpCallbackListener {
 
     @BindView(R.id.srl)
     SmartRefreshLayout mRefreshLayout;
@@ -83,8 +81,8 @@ public class ArticleListFragment extends BaseFragment implements OnRefreshListen
 
     @Override
     public void initData() {
-        curPage = 0;
-        HttpUtil.sendOkHttpRequest("wxarticle/list/" + id + "/" + curPage + "/json", this);
+        curPage = 1;
+        HttpUtil.get("wxarticle/list/" + id + "/" + curPage + "/json", 0, null, this);
         mLoadingView.start();
         mLoadingView.setVisibility(View.VISIBLE);
     }
@@ -94,31 +92,23 @@ public class ArticleListFragment extends BaseFragment implements OnRefreshListen
         curPage = 1;
         mArticleList.clear();
         mAdapter.notifyDataSetChanged();
-        HttpUtil.sendOkHttpRequest("wxarticle/list/" + id + "/" + curPage + "/json", this);
+        HttpUtil.get("wxarticle/list/" + id + "/" + curPage + "/json", 0, null, this);
     }
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
         ++ curPage;
-        HttpUtil.sendOkHttpRequest("wxarticle/list/" + id + "/" + curPage + "/json", this);
+        HttpUtil.get("wxarticle/list/" + id + "/" + curPage + "/json", 0, null, this);
     }
 
     @Override
-    public void onFailure(@NonNull Call call, @NonNull IOException e) {
-
-    }
-
-    @Override
-    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+    public void onFinish(int requestId, String response, String cookie) {
         try {
-            if (response.body() != null){
-                String jsonData = response.body().string();
-                JsonObject jsonObj = new JsonParser().parse(jsonData).getAsJsonObject();
-                if (jsonObj.get("errorCode").getAsInt() == 0){
-                    mArticleList.addAll(JsonUtil.getArticles(jsonObj));
-                }else {
-                    Toast.makeText(mContext, jsonObj.get("errorMsg").getAsString(), Toast.LENGTH_SHORT).show();
-                }
+            JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
+            if (jsonObj.get("errorCode").getAsInt() == 0){
+                mArticleList.addAll(JsonUtil.getArticles(jsonObj));
+            }else {
+                Toast.makeText(mContext, jsonObj.get("errorMsg").getAsString(), Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -134,5 +124,10 @@ public class ArticleListFragment extends BaseFragment implements OnRefreshListen
                 }
             });
         }
+    }
+
+    @Override
+    public void onFailure(Exception e) {
+
     }
 }

@@ -20,8 +20,8 @@ import com.laughter.designapplication.fragment.WeChatFragment;
 import com.laughter.designapplication.fragment.ProjectFragment;
 import com.laughter.designapplication.fragment.PersonalFragment;
 import com.laughter.designapplication.model.Tree;
-import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.designapplication.util.JsonUtil;
+import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.framework.activity.BaseActivity;
 
 import org.litepal.LitePal;
@@ -93,7 +93,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void initData() {
-        HttpUtil.sendGetRequest("project/tree/json", 0, this);
+        HttpUtil.get("project/tree/json", 0, null, this);
     }
 
     @Override
@@ -203,6 +203,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void onFailure(Exception e) {
-
+        e.printStackTrace();
     }
 }

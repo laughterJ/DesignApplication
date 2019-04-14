@@ -22,8 +22,8 @@ import com.laughter.designapplication.R;
 import com.laughter.designapplication.adapter.ProjectAdapter;
 import com.laughter.designapplication.model.Project;
 import com.laughter.designapplication.model.Tree;
-import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.designapplication.util.JsonUtil;
+import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.framework.fragment.BaseFragment;
 import com.laughter.framework.views.LoadingView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -53,7 +53,7 @@ public class ProjectFragment extends BaseFragment implements HttpCallbackListene
     List<Tree> menuItems;
     private List<Project> mProjects;
     private ProjectAdapter mAdapter;
-    private int curPage = 1;
+    private int curPage;
     private String cid;
 
     @Override
@@ -84,7 +84,8 @@ public class ProjectFragment extends BaseFragment implements HttpCallbackListene
     public void initData() {
         menuItems = LitePal.findAll(Tree.class);
         cid = menuItems.get(0).getCid();
-        HttpUtil.sendGetRequest("project/list/" + curPage + "/json?cid=" + cid, 1, this);
+        curPage = 1;
+        HttpUtil.get("project/list/" + curPage + "/json?cid=" + cid, 0, null, this);
         mLoadingView.start();
         mLoadingView.setVisibility(View.VISIBLE);
     }
@@ -111,13 +112,13 @@ public class ProjectFragment extends BaseFragment implements HttpCallbackListene
         curPage = 1;
         mProjects.clear();
         mAdapter.notifyDataSetChanged();
-        HttpUtil.sendGetRequest("project/list/" + curPage + "/json?cid=" + cid, 1, this);
+        HttpUtil.get("project/list/" + curPage + "/json?cid=" + cid, 0, null, this);
     }
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
         ++curPage;
-        HttpUtil.sendGetRequest("project/list/" + curPage + "/json?cid=" + cid, 1, this);
+        HttpUtil.get("project/list/" + curPage + "/json?cid=" + cid, 0, null, this);
     }
 
     @Override
@@ -134,21 +135,18 @@ public class ProjectFragment extends BaseFragment implements HttpCallbackListene
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            ((Activity)mContext).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.notifyDataSetChanged();
-                    mRefreshLayout.finishRefresh();
-                    mRefreshLayout.finishLoadMore();
-                    mLoadingView.setVisibility(View.GONE);
-                    mLoadingView.cancle();
-                }
+            ((Activity)mContext).runOnUiThread(() -> {
+                mAdapter.notifyDataSetChanged();
+                mRefreshLayout.finishRefresh();
+                mRefreshLayout.finishLoadMore();
+                mLoadingView.setVisibility(View.GONE);
+                mLoadingView.cancle();
             });
         }
     }
 
     @Override
     public void onFailure(Exception e) {
-
+        e.printStackTrace();
     }
 }

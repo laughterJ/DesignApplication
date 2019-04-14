@@ -18,7 +18,7 @@ import com.laughter.designapplication.adapter.ArticleAdapter;
 import com.laughter.designapplication.model.Article;
 import com.laughter.designapplication.model.Banner;
 import com.laughter.designapplication.util.JsonUtil;
-import com.laughter.designapplication.util.NewHttpUtil;
+import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.framework.fragment.BaseFragment;
 import com.laughter.framework.util.ToastUtil;
 import com.laughter.framework.views.BannerView;
@@ -93,9 +93,9 @@ public class HomePageFragment extends BaseFragment implements OnRefreshListener,
         banners = new ArrayList<>();
         imgs = new ArrayList<>();
         titles = new ArrayList<>();
-        NewHttpUtil.get("banner/json", BANNER_REQUEST_ID, null, this);
-        curPage = 0;
-        NewHttpUtil.get("article/list/" +curPage + "/json", ARTICLE_REQUEST_ID, null, this);
+        HttpUtil.get("banner/json", BANNER_REQUEST_ID, null, this);
+        curPage = 1;
+        HttpUtil.get("article/list/" +curPage + "/json", ARTICLE_REQUEST_ID, null, this);
         mLoadingView.start();
         mLoadingView.setVisibility(View.VISIBLE);
     }
@@ -144,14 +144,14 @@ public class HomePageFragment extends BaseFragment implements OnRefreshListener,
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         mArticleList.clear();
         mAdapter.notifyDataSetChanged();
-        curPage = 0;
-        NewHttpUtil.get("article/list/" +curPage + "/json", ARTICLE_REQUEST_ID, null, this);
+        curPage = 1;
+        HttpUtil.get("article/list/" +curPage + "/json", ARTICLE_REQUEST_ID, null, this);
     }
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
         ++curPage;
-        NewHttpUtil.get("article/list/" +curPage + "/json", ARTICLE_REQUEST_ID, null, HomePageFragment.this);
+        HttpUtil.get("article/list/" +curPage + "/json", ARTICLE_REQUEST_ID, null, HomePageFragment.this);
     }
 
     @Override

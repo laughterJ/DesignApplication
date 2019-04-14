@@ -169,8 +169,7 @@ public class BannerView extends FrameLayout implements ViewPager.OnPageChangeLis
                 View dotView = new View(mContext);
                 lp.height = dotSize;
                 lp.width = dotSize;
-                lp.setMarginStart(dotSize / 2);
-                lp.setMarginEnd(dotSize / 2);
+                lp.setMargins(dotSize / 2, 0, dotSize / 2, 0);
                 dotView.setLayoutParams(lp);
                 dotView.setBackgroundColor(Color.WHITE);
                 dotView.setEnabled(false);

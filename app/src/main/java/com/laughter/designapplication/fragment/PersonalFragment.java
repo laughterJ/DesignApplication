@@ -145,6 +145,6 @@ public class PersonalFragment extends BaseFragment implements HttpCallbackListen
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
-        HttpUtil.sendHttpRequest("user/logout/json", "GET", null, LOG_OFF, this);
+        HttpUtil.get("user/logout/json", LOG_OFF, null, this);
     }
 }

@@ -9,7 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
-import com.laughter.designapplication.util.NewHttpUtil;
+import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.framework.activity.BaseActivity;
 import com.laughter.framework.util.SpUtil;
 import com.laughter.framework.util.ToastUtil;
@@ -82,30 +82,29 @@ public class LoginActivity extends BaseActivity implements HttpCallbackListener 
         JsonObject params = new JsonObject();
         params.addProperty("username", username);
         params.addProperty("password", password);
-        NewHttpUtil.post("user/login", 0, params, null, true, this);
+        HttpUtil.post("user/login", 0, params, null, true, this);
     }
 
     @Override
     public void onFinish(int requestId, String response, String cookie) {
         JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (jsonObj.get("errorCode").getAsInt() == 0){
-                    ToastUtil.showShortToast(LoginActivity.this, "登陆成功");
-                    SpUtil.putString(LoginActivity.this, "username", editUserName.getText().toString());
-                    SpUtil.putString(LoginActivity.this, "password", editPassword.getText().toString());
-                    SpUtil.putBoolean(LoginActivity.this, "isLogin", true);
-                    SpUtil.putString(LoginActivity.this, "Cookie", cookie);
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
-                }
+        runOnUiThread(() -> {
+            if (jsonObj.get("errorCode").getAsInt() == 0){
+                ToastUtil.showShortToast(LoginActivity.this, "登陆成功");
+                SpUtil.putString(LoginActivity.this, "username", editUserName.getText().toString());
+                SpUtil.putString(LoginActivity.this, "password", editPassword.getText().toString());
+                SpUtil.putBoolean(LoginActivity.this, "isLogin", true);
+                SpUtil.putString(LoginActivity.this, "Cookie", cookie);
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
+            }else{
+                ToastUtil.showShortToast(LoginActivity.this, jsonObj.get("errorMsg").getAsString());
             }
         });
     }
 
     @Override
     public void onFailure(Exception e) {
-
+        e.printStackTrace();
     }
 }

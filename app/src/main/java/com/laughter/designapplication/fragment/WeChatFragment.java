@@ -12,8 +12,8 @@ import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.adapter.TabberAdapter;
 import com.laughter.designapplication.model.OfficialAccount;
-import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.designapplication.util.JsonUtil;
+import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.framework.fragment.BaseFragment;
 import com.laughter.framework.util.ToastUtil;
 
@@ -52,7 +52,7 @@ public class WeChatFragment extends BaseFragment implements HttpCallbackListener
     public void initData() {
         fragments = new ArrayList<>();
         tabNames = new ArrayList<>();
-        HttpUtil.sendHttpRequest("wxarticle/chapters/json", "GET", null, 0, this);
+        HttpUtil.get("wxarticle/chapters/json", 0, null, this);
     }
 
     @Override

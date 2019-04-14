@@ -87,25 +87,22 @@ public class RegisterActivity extends BaseActivity implements HttpCallbackListen
         params.addProperty("username", userName);
         params.addProperty("password", userPass);
         params.addProperty("repassword", rePass);
-        HttpUtil.sendHttpRequest("user/register", "POST", params, 0, this);
+        HttpUtil.post("user/register", 0, params, null, false, this);
     }
 
     @Override
     public void onFinish(int requestId, String response, String cookie) {
         try {
             JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (jsonObj.get("errorCode").getAsInt() == 0){
-                        ToastUtil.showShortToast(RegisterActivity.this, "注册成功");
-                        SpUtil.putString(RegisterActivity.this, "username", editUserName.getText().toString());
-                        SpUtil.putString(RegisterActivity.this, "password", editPassword.getText().toString());
-                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                        finish();
-                    }else {
-                        ToastUtil.showShortToast(RegisterActivity.this, jsonObj.get("errorMsg").getAsString());
-                    }
+            runOnUiThread(() -> {
+                if (jsonObj.get("errorCode").getAsInt() == 0){
+                    ToastUtil.showShortToast(RegisterActivity.this, "注册成功");
+                    SpUtil.putString(RegisterActivity.this, "username", editUserName.getText().toString());
+                    SpUtil.putString(RegisterActivity.this, "password", editPassword.getText().toString());
+                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                    finish();
+                }else {
+                    ToastUtil.showShortToast(RegisterActivity.this, jsonObj.get("errorMsg").getAsString());
                 }
             });
         }catch (Exception e){
