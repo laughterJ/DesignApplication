@@ -11,10 +11,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.laughter.framework.views.LoadingListView
-            android:id="@+id/llv_list"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/srl_todo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
+            <com.laughter.framework.views.LoadingListView
+                android:id="@+id/llv_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/colorGray"
+                android:dividerHeight="0.1dp"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@+id/tv_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/empty_text"
+            android:textSize="18sp"/>
 
         <FrameLayout
             android:id="@+id/fl_add"
@@ -34,6 +49,13 @@
             app:rippleColor="@color/colorWeakWhite"
             app:elevation="8dp"
             app:fabSize="auto"/>
+
+        <com.laughter.framework.views.LoadingView
+            android:id="@+id/loading_view"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
 
     </FrameLayout>
 

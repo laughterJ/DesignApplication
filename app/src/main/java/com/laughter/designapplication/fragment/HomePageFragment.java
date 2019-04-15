@@ -102,37 +102,32 @@ public class HomePageFragment extends BaseFragment implements OnRefreshListener,
 
     @Override
     public void onFinish(int requestId, String response, String cookie) {
-        try{
-            ((Activity)mContext).runOnUiThread(() -> {
-                JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
-                if (jsonObj.get("errorCode").getAsInt() == 0){
-                    if (requestId == BANNER_REQUEST_ID){
-                        banners.addAll(JsonUtil.getBanners(jsonObj));
-                        for(int i=0;i<banners.size();i++){
-                            imgs.add(banners.get(i).getImagePath());
-                            titles.add(banners.get(i).getTitle());
-                        }
-                        mBannerView.setImageUrl(imgs);
-                        mBannerView.setTitle(titles);
-                        mBannerView.setmIndicaterStyle(R.drawable.dot_bg_selector);
-                        mBannerView.build();
+        ((Activity) mContext).runOnUiThread(() -> {
+            if (JsonUtil.getErrorCode(response) == 0){
+                if (requestId == BANNER_REQUEST_ID){
+                    banners.addAll(JsonUtil.getBanners(response));
+                    for(int i=0;i<banners.size();i++){
+                        imgs.add(banners.get(i).getImagePath());
+                        titles.add(banners.get(i).getTitle());
                     }
-                    if (requestId == ARTICLE_REQUEST_ID){
-                        mArticleList.addAll(JsonUtil.getArticles(jsonObj));
-                        mAdapter.notifyDataSetChanged();
-                        mBannerView.setVisibility(View.VISIBLE);
-                    }
-                    mLoadingView.cancle();
-                    mLoadingView.setVisibility(View.GONE);
-                    mRefreshLayout.finishLoadMore();
-                    mRefreshLayout.finishRefresh();
-                }else {
-                    ToastUtil.showShortToast(mContext, jsonObj.get("errorMsg").getAsString());
+                    mBannerView.setImageUrl(imgs);
+                    mBannerView.setTitle(titles);
+                    mBannerView.setmIndicaterStyle(R.drawable.dot_bg_selector);
+                    mBannerView.build();
                 }
-            });
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+                if (requestId == ARTICLE_REQUEST_ID){
+                    mArticleList.addAll(JsonUtil.getArticles(response));
+                    mAdapter.notifyDataSetChanged();
+                    mBannerView.setVisibility(View.VISIBLE);
+                }
+                mLoadingView.cancle();
+                mLoadingView.setVisibility(View.GONE);
+                mRefreshLayout.finishLoadMore();
+                mRefreshLayout.finishRefresh();
+            }else {
+                ToastUtil.showShortToast(mContext, JsonUtil.getErrorMsg(response));
+            }
+        });
     }
 
     @Override

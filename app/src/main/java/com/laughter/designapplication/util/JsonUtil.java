@@ -3,14 +3,15 @@ package com.laughter.designapplication.util;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.laughter.designapplication.model.Article;
 import com.laughter.designapplication.model.Banner;
 import com.laughter.designapplication.model.OfficialAccount;
 import com.laughter.designapplication.model.Project;
+import com.laughter.designapplication.model.TodoItem;
 import com.laughter.designapplication.model.Tree;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -20,21 +21,53 @@ import java.util.List;
 
 public class JsonUtil {
 
-    public static List<Banner> getBanners(JsonObject jsonObj) {
+    public static int getErrorCode(String response) {
+        int errorCode = -1;
+        try {
+            JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
+            errorCode = jsonObj.get("errorCode").getAsInt();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return errorCode;
+    }
+
+    public static String getErrorMsg(String response) {
+        String errorMsg = null;
+        try {
+            JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
+            errorMsg = jsonObj.get("errorMsg").getAsString();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return errorMsg;
+    }
+
+    public static List<Banner> getBanners(String response) {
         List<Banner> banners = null;
-        if (jsonObj.get("data").getClass() == JsonArray.class){
-            JsonArray data = jsonObj.getAsJsonArray("data");
-            banners = new Gson().fromJson(data, new TypeToken<List<Banner>>(){}.getType());
+        try {
+            JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
+            if (jsonObj.get("data").getClass() == JsonArray.class){
+                JsonArray data = jsonObj.getAsJsonArray("data");
+                banners = new Gson().fromJson(data, new TypeToken<List<Banner>>(){}.getType());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return banners;
     }
 
-    public static List<Article> getArticles(JsonObject jsonObj) {
+    public static List<Article> getArticles(String response) {
         List<Article> articles = null;
-        JsonObject data = jsonObj.getAsJsonObject("data");
-        if (data.get("datas").getClass() == JsonArray.class){
-            JsonArray datas = data.getAsJsonArray("datas");
-            articles = new Gson().fromJson(datas, new TypeToken<List<Article>>(){}.getType());
+        try{
+            JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
+            JsonObject data = jsonObj.getAsJsonObject("data");
+            if (data.get("datas").getClass() == JsonArray.class){
+                JsonArray datas = data.getAsJsonArray("datas");
+                articles = new Gson().fromJson(datas, new TypeToken<List<Article>>(){}.getType());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return articles;
     }
@@ -65,5 +98,20 @@ public class JsonUtil {
             oas = new Gson().fromJson(data, new TypeToken<List<OfficialAccount>>(){}.getType());
         }
         return oas;
+    }
+
+    public static List<TodoItem> getTodoList(String response) {
+        List<TodoItem> todoItems = null;
+        try {
+            JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
+            JsonObject data = jsonObj.getAsJsonObject("data");
+            if (data.get("datas").getClass() == JsonArray.class){
+                JsonArray datas = data.getAsJsonArray("datas");
+                todoItems = new Gson().fromJson(datas, new TypeToken<List<TodoItem>>(){}.getType());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return todoItems;
     }
 }

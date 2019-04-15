@@ -89,27 +89,16 @@ public class CollectionActivity extends BaseActivity implements LoadingListView.
     @Override
     public void onFinish(int requestId, String response, String cookie) {
         if (requestId == 0){
-            try{
-                if (response != null && !response.equals("")){
-                    JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
-                    runOnUiThread(() -> {
-                        if (jsonObj.get("errorCode").getAsInt() == 0){
-                            articles.addAll(JsonUtil.getArticles(jsonObj));
-                        }else {
-                            ToastUtil.showShortToast(CollectionActivity.this, jsonObj.get("errorMsg").getAsString());
-                        }
-                    });
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }finally {
-                runOnUiThread(() -> {
+            runOnUiThread(() -> {
+                if (JsonUtil.getErrorCode(response) == 0){
+                    articles.addAll(JsonUtil.getArticles(response));
                     mAdapter.notifyDataSetChanged();
                     mRefreshLayout.setRefreshing(false);
                     mListView.setLoadCompleted();
-                });
-            }
-
+                }else {
+                    ToastUtil.showShortToast(CollectionActivity.this, JsonUtil.getErrorMsg(response));
+                }
+            });
         }
     }
 

@@ -43,4 +43,8 @@
     <string name="property_1">紧急</string>
     <string name="property_2">一般</string>
     <string name="property_3">暂缓</string>
+    <string name="deadline_text">期限：%1$s</string>
+    <string name="priority_text">优先级：%1$s</string>
+    <string name="empty_text">你还没有TodoList，快来添加吧</string>
+    <string name="switch_text">切换</string>
 </resources>

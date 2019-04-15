@@ -17,6 +17,7 @@ import com.laughter.designapplication.model.Article;
 import com.laughter.designapplication.util.JsonUtil;
 import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.framework.fragment.BaseFragment;
+import com.laughter.framework.util.ToastUtil;
 import com.laughter.framework.views.LoadingView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -103,27 +104,18 @@ public class ArticleListFragment extends BaseFragment implements OnRefreshListen
 
     @Override
     public void onFinish(int requestId, String response, String cookie) {
-        try {
-            JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
-            if (jsonObj.get("errorCode").getAsInt() == 0){
-                mArticleList.addAll(JsonUtil.getArticles(jsonObj));
+        ((Activity)mContext).runOnUiThread(() -> {
+            if (JsonUtil.getErrorCode(response) == 0){
+                mArticleList.addAll(JsonUtil.getArticles(response));
+                mAdapter.notifyDataSetChanged();
+                mLoadingView.cancle();
+                mLoadingView.setVisibility(View.GONE);
+                mRefreshLayout.finishLoadMore();
+                mRefreshLayout.finishRefresh();
             }else {
-                Toast.makeText(mContext, jsonObj.get("errorMsg").getAsString(), Toast.LENGTH_SHORT).show();
+                ToastUtil.showShortToast(mContext, JsonUtil.getErrorMsg(response));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            ((Activity)mContext).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.notifyDataSetChanged();
-                    mLoadingView.cancle();
-                    mLoadingView.setVisibility(View.GONE);
-                    mRefreshLayout.finishLoadMore();
-                    mRefreshLayout.finishRefresh();
-                }
-            });
-        }
+        });
     }
 
     @Override

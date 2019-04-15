@@ -65,4 +65,6 @@ dependencies {
     // glide
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    // 仿ios选择控件
+    implementation 'com.contrarywind:Android-PickerView:4.1.7'
 }

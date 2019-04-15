@@ -93,7 +93,7 @@ public class HttpUtil {
 
                 //建立输入流，向指向的URL传入参数
                 DataOutputStream dos = new DataOutputStream(connection.getOutputStream());
-                dos.writeBytes(param.toString());
+                dos.write(param.toString().getBytes());
                 dos.flush();
                 dos.close();
 
