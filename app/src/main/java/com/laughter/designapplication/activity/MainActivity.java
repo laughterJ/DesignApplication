@@ -16,7 +16,7 @@ import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.fragment.HomePageFragment;
 import com.laughter.designapplication.fragment.KnowledgeFragment;
-import com.laughter.designapplication.fragment.WeChatFragment;
+import com.laughter.designapplication.fragment.OfficialAccountFragment;
 import com.laughter.designapplication.fragment.ProjectFragment;
 import com.laughter.designapplication.fragment.PersonalFragment;
 import com.laughter.designapplication.model.Tree;
@@ -41,7 +41,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     private static final String TAG_HOMEPAGE = "HomePage";
     private static final String TAG_KNOWLEDGE = "Knowledge";
     private static final String TAG_PROJECT = "Project";
-    private static final String TAG_WECHAT = "WeChat";
+    private static final String TAG_OA = "OfficialAccount";
     private static final String TAG_PERSONAL = "Personal";
 
     private FragmentManager mFragmentManager;
@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     private HomePageFragment mHomePageFragment;
     private KnowledgeFragment mKnowledgeFragment;
     private ProjectFragment mProjectFragment;
-    private WeChatFragment mWeChatFragment;
+    private OfficialAccountFragment mOfficialAccountFragment;
     private PersonalFragment mPersonalFragment;
 
     private long lastPressTime = System.currentTimeMillis();
@@ -127,11 +127,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 }
                 break;
             case R.id.tab_location:
-                if (mWeChatFragment == null){
-                    mWeChatFragment = new WeChatFragment();
-                    mTranscation.add(R.id.continer, mWeChatFragment, TAG_WECHAT);
+                if (mOfficialAccountFragment == null){
+                    mOfficialAccountFragment = new OfficialAccountFragment();
+                    mTranscation.add(R.id.continer, mOfficialAccountFragment, TAG_OA);
                 }else {
-                    mTranscation.show(mWeChatFragment);
+                    mTranscation.show(mOfficialAccountFragment);
                 }
                 break;
             case R.id.tab_personal:
@@ -153,7 +153,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         mHomePageFragment = (HomePageFragment) mFragmentManager.findFragmentByTag(TAG_HOMEPAGE);
         mKnowledgeFragment = (KnowledgeFragment) mFragmentManager.findFragmentByTag(TAG_KNOWLEDGE);
         mProjectFragment = (ProjectFragment) mFragmentManager.findFragmentByTag(TAG_PROJECT);
-        mWeChatFragment = (WeChatFragment) mFragmentManager.findFragmentByTag(TAG_WECHAT);
+        mOfficialAccountFragment = (OfficialAccountFragment) mFragmentManager.findFragmentByTag(TAG_OA);
         mPersonalFragment = (PersonalFragment) mFragmentManager.findFragmentByTag(TAG_PERSONAL);
 
         if (mHomePageFragment != null){
@@ -165,8 +165,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         if (mProjectFragment != null){
             mTranscation.hide(mProjectFragment);
         }
-        if (mWeChatFragment != null){
-            mTranscation.hide(mWeChatFragment);
+        if (mOfficialAccountFragment != null){
+            mTranscation.hide(mOfficialAccountFragment);
         }
         if (mPersonalFragment != null){
             mTranscation.hide(mPersonalFragment);

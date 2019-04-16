@@ -27,7 +27,7 @@ import butterknife.BindView;
  * des： com.laughter.designapplication.fragment
  */
 
-public class WeChatFragment extends BaseFragment implements HttpCallbackListener {
+public class OfficialAccountFragment extends BaseFragment implements HttpCallbackListener {
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.tabber_wechat) TabLayout mTabLayout;

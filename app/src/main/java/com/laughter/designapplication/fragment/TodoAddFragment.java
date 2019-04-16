@@ -4,6 +4,8 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.Bundle;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
@@ -35,10 +38,21 @@ public class TodoAddFragment extends BaseFragment implements ViewTreeObserver.On
     @BindView(R.id.ll_view) LinearLayout llView;
     @BindView(R.id.et_todo_des) EditText etTodoDes;
     @BindView(R.id.rg_priority) RadioGroup rgPriority;
+    @BindView(R.id.rb_first) RadioButton rbFirst;
+    @BindView(R.id.rb_second) RadioButton rbSecond;
+    @BindView(R.id.rb_third) RadioButton rbThird;
 
     private String todoDes;
     private String deadline;
     private int priority;
+    private boolean isAdded;
+    private int id;
+
+    public static TodoAddFragment newInstance(Bundle args) {
+        TodoAddFragment fragment = new TodoAddFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public int getLayout() {
@@ -55,6 +69,30 @@ public class TodoAddFragment extends BaseFragment implements ViewTreeObserver.On
         // 默认优先级和时间
         priority = 3;
         deadline = DateUtil.date2String(new Date(System.currentTimeMillis()), "yyyy-MM-dd");
+
+        // 判断是修改还是创建
+        Bundle args = getArguments();
+        if (args != null && args.getBoolean("isAdded", false)){
+            isAdded = args.getBoolean("isAdded", false);
+            id = args.getInt("id", id);
+            todoDes = args.getString("title", todoDes);
+            etTodoDes.setText(todoDes);
+            priority = args.getInt("priority", priority);
+            switch (priority){
+                case 1:
+                    rbFirst.setChecked(true);
+                    break;
+                case 2:
+                    rbSecond.setChecked(true);
+                    break;
+                case 3:
+                    rbThird.setChecked(true);
+                    break;
+                default:
+                    break;
+            }
+            deadline = args.getString("deadline", deadline);
+        }
     }
 
     /**
@@ -129,8 +167,12 @@ public class TodoAddFragment extends BaseFragment implements ViewTreeObserver.On
         params.addProperty("date", deadline);
         params.addProperty("priority", priority);
         String localCookie = SpUtil.getString(mContext, "Cookie", null);
-        HttpUtil.post("lg/todo/add/json", 0, params, localCookie, false, this);
+        HttpUtil.post(getPath(), 0, params, localCookie, false, this);
         ((TodoListActivity)mContext).showLoading();
+    }
+
+    private String getPath() {
+        return isAdded ? "lg/todo/update/" + id + "/json" : "lg/todo/add/json";
     }
 
     @Override

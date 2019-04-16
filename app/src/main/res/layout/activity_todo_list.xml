@@ -29,7 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/empty_text"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:visibility="gone"/>
 
         <FrameLayout
             android:id="@+id/fl_add"

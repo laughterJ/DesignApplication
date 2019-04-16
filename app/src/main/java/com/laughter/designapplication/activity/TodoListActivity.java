@@ -1,5 +1,6 @@
 package com.laughter.designapplication.activity;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -31,7 +32,13 @@ import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class TodoListActivity extends BaseActivity implements HttpCallbackListener, LoadingListView.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
+/**
+ * created by JH at 2019/4/16
+ * des： com.laughter.designapplication.activity
+ */
+
+public class TodoListActivity extends BaseActivity implements HttpCallbackListener,
+        LoadingListView.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.loading_view) LoadingView mLoadingView;
@@ -65,7 +72,6 @@ public class TodoListActivity extends BaseActivity implements HttpCallbackListen
         srlTodo.setColorSchemeColors(primaryColor);
         srlTodo.setOnRefreshListener(this);
         mListView.addFooterView(LayoutInflater.from(this).inflate(R.layout.layout_footer_view, mListView, false));
-        mListView.setEmptyView(tvEmpty);
         mListView.setOnLoadMoreListener(this);
     }
 
@@ -73,7 +79,7 @@ public class TodoListActivity extends BaseActivity implements HttpCallbackListen
     public void initData() {
         todoItems = new ArrayList<>();
         curPage = 1;
-        String path = "lg/todo/v2/list/" + curPage + "/json" + "?status=0&orderby=3";
+        String path = getPath();
         String localCookie = SpUtil.getString(this, "Cookie", null);
         HttpUtil.get(path, 0, localCookie, this);
     }
@@ -82,16 +88,9 @@ public class TodoListActivity extends BaseActivity implements HttpCallbackListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_add:
-                FragmentManager manager = getSupportFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.setCustomAnimations(R.anim.anim_enter, R.anim.anim_exit);
-                mTodoAddFragment = manager.findFragmentByTag("todo");
-                if (mTodoAddFragment == null){
-                    mTodoAddFragment = new TodoAddFragment();
-                    transaction.add(R.id.fl_add, mTodoAddFragment, "todo");
-                }
-                transaction.show(mTodoAddFragment);
-                transaction.commit();
+                Bundle args = new Bundle();
+                args.putBoolean("isAdded", false);
+                showFragment(args);
                 break;
             default:
                 break;
@@ -111,6 +110,19 @@ public class TodoListActivity extends BaseActivity implements HttpCallbackListen
         showLoading();
         updateList();
         return true;
+    }
+
+    public void showFragment(Bundle args) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.anim_enter, R.anim.anim_exit);
+        mTodoAddFragment = manager.findFragmentByTag("todo");
+        if (mTodoAddFragment == null){
+            mTodoAddFragment = TodoAddFragment.newInstance(args);
+            transaction.add(R.id.fl_add, mTodoAddFragment, "todo");
+        }
+        transaction.show(mTodoAddFragment);
+        transaction.commit();
     }
 
     public void hideFragment() {
@@ -169,7 +181,9 @@ public class TodoListActivity extends BaseActivity implements HttpCallbackListen
                     if (JsonUtil.getErrorCode(response) == 0){
                         todoItems.addAll(JsonUtil.getTodoList(response));
                         if (todoItems.size() == 0){
-
+                            tvEmpty.setVisibility(View.VISIBLE);
+                        }else {
+                            tvEmpty.setVisibility(View.GONE);
                         }
                         if (mAdapter == null){
                             mAdapter = new TodoAdapter(this, todoItems);
@@ -194,6 +208,19 @@ public class TodoListActivity extends BaseActivity implements HttpCallbackListen
 
     @Override
     public void onFailure(Exception e) {
+        e.printStackTrace();
+    }
 
+    @Override
+    public void onBackPressed() {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.anim_enter, R.anim.anim_exit);
+        if (mTodoAddFragment != null && mTodoAddFragment.isVisible()){
+            transaction.hide(mTodoAddFragment);
+            transaction.commit();
+        }else {
+            finish();
+        }
     }
 }

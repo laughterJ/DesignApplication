@@ -3,6 +3,7 @@ package com.laughter.designapplication.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,6 +103,16 @@ public class TodoAdapter extends BaseAdapter implements HttpCallbackListener {
             ((TodoListActivity)mContext).showLoading();
             String path = "lg/todo/delete/" +todoItem.getId() + "/json";
             HttpUtil.post(path, 1, null, localCookie, false, this);
+        });
+
+        holder.itemView.setOnClickListener(v -> {
+            Bundle args = new Bundle();
+            args.putBoolean("isAdded", true);
+            args.putInt("id", todoItem.getId());
+            args.putString("title", todoItem.getTitle());
+            args.putString("deadline", todoItem.getDateStr());
+            args.putInt("priority", todoItem.getPriority());
+            ((TodoListActivity)mContext).showFragment(args);
         });
 
         return convertView;

@@ -2,22 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/tab_homepage"
-        android:icon="@drawable/ic_homepage"
+        android:icon="@drawable/ic_bottom_home"
         android:title="首页" />
     <item
         android:id="@+id/tab_knowledge"
-        android:icon="@drawable/ic_knowledge"
+        android:icon="@drawable/ic_bottom_knowledge"
         android:title="体系" />
     <item
         android:id="@+id/tab_project"
-        android:icon="@drawable/ic_proj"
+        android:icon="@drawable/ic_bottom_project"
         android:title="项目" />
     <item
         android:id="@+id/tab_location"
-        android:icon="@drawable/ic_oa"
+        android:icon="@drawable/ic_bottom_oa"
         android:title="公众号" />
     <item
         android:id="@+id/tab_personal"
-        android:icon="@drawable/ic_personal"
+        android:icon="@drawable/ic_bottom_personal"
         android:title="个人" />
 </menu>
