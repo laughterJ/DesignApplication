@@ -18,7 +18,6 @@ import android.widget.RadioGroup;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.google.gson.JsonObject;
-import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.activity.TodoListActivity;
 import com.laughter.designapplication.util.HttpUtil;
@@ -33,7 +32,7 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class TodoAddFragment extends BaseFragment implements ViewTreeObserver.OnGlobalLayoutListener, HttpCallbackListener {
+public class TodoAddFragment extends BaseFragment implements ViewTreeObserver.OnGlobalLayoutListener, HttpUtil.HttpCallbackListener {
 
     @BindView(R.id.ll_view) LinearLayout llView;
     @BindView(R.id.et_todo_des) EditText etTodoDes;

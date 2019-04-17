@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.adapter.ProjectAdapter;
 import com.laughter.designapplication.model.Project;
@@ -43,7 +42,7 @@ import butterknife.BindView;
  * des： com.laughter.designapplication.fragment
  */
 
-public class ProjectFragment extends BaseFragment implements HttpCallbackListener, OnRefreshListener, OnLoadMoreListener {
+public class ProjectFragment extends BaseFragment implements HttpUtil.HttpCallbackListener, OnRefreshListener, OnLoadMoreListener {
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.srl) SmartRefreshLayout mRefreshLayout;

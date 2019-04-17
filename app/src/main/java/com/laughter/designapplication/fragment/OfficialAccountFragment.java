@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.adapter.TabberAdapter;
 import com.laughter.designapplication.model.OfficialAccount;
@@ -27,7 +26,7 @@ import butterknife.BindView;
  * des： com.laughter.designapplication.fragment
  */
 
-public class OfficialAccountFragment extends BaseFragment implements HttpCallbackListener {
+public class OfficialAccountFragment extends BaseFragment implements HttpUtil.HttpCallbackListener {
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.tabber_wechat) TabLayout mTabLayout;

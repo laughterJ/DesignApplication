@@ -6,11 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.adapter.ArticleAdapter;
 import com.laughter.designapplication.model.Article;
@@ -35,7 +31,7 @@ import butterknife.BindView;
  */
 
 public class ArticleListFragment extends BaseFragment implements OnRefreshListener,
-        OnLoadMoreListener, HttpCallbackListener {
+        OnLoadMoreListener, HttpUtil.HttpCallbackListener {
 
     @BindView(R.id.srl)
     SmartRefreshLayout mRefreshLayout;

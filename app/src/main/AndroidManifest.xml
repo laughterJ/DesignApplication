@@ -39,8 +39,10 @@
         <activity android:name=".activity.CollectionActivity" />
         <activity android:name=".activity.DetailActivity" />
         <activity android:name=".activity.KnowledgeActivity" />
-        <activity android:name=".activity.TodoListActivity"
-            android:theme="@style/TodoListTheme"/>
+        <activity
+            android:name=".activity.TodoListActivity"
+            android:theme="@style/TodoListTheme" />
+        <activity android:name=".activity.AboutActivity"></activity>
     </application>
 
 </manifest>

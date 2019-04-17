@@ -2,18 +2,13 @@ package com.laughter.designapplication.util;
 
 import android.util.Log;
 import com.google.gson.JsonObject;
-import com.laughter.designapplication.HttpCallbackListener;
-import com.laughter.designapplication.application.MyApplication;
-import com.laughter.framework.util.SpUtil;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
-import java.util.Map;
 
 /**
  * created by JH at 2019/4/11
@@ -127,5 +122,10 @@ public class HttpUtil {
                 }
             }
         }).start();
+    }
+
+    public interface HttpCallbackListener {
+        void onFinish(int requestId, String response, String cookie);
+        void onFailure(Exception e);
     }
 }

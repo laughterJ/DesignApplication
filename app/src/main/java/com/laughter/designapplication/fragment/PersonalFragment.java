@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
+import com.laughter.designapplication.activity.AboutActivity;
 import com.laughter.designapplication.activity.CollectionActivity;
 import com.laughter.designapplication.activity.LoginActivity;
 import com.laughter.designapplication.activity.TodoListActivity;
@@ -32,7 +32,7 @@ import butterknife.OnClick;
  * des： com.laughter.designapplication.fragment
  */
 
-public class PersonalFragment extends BaseFragment implements HttpCallbackListener,
+public class PersonalFragment extends BaseFragment implements HttpUtil.HttpCallbackListener,
         DialogInterface.OnClickListener {
 
     @BindView(R.id.img_profile_pic) ImageView imgProfilePic;
@@ -86,6 +86,9 @@ public class PersonalFragment extends BaseFragment implements HttpCallbackListen
                     startActivity(new Intent(mContext, LoginActivity.class));
                 }
                 break;
+            case R.id.ll_author:
+                startActivity(new Intent(mContext, AboutActivity.class));
+                break;
             case R.id.ll_log_off:
                 if (SpUtil.getBoolean(mContext, "isLogin", false)){
                     new AlertDialog.Builder(mContext)
@@ -124,13 +127,10 @@ public class PersonalFragment extends BaseFragment implements HttpCallbackListen
     public void onFinish(int requestId, String response, String cookie) {
         switch (requestId){
             case LOG_OFF:
-                ((Activity)mContext).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        SpUtil.putBoolean(mContext, "isLogin", false);
-                        SpUtil.putString(mContext,"Cookie", "");
-                        initView();
-                    }
+                ((Activity)mContext).runOnUiThread(() -> {
+                    SpUtil.putBoolean(mContext, "isLogin", false);
+                    SpUtil.putString(mContext,"Cookie", "");
+                    initView();
                 });
                 break;
             default:

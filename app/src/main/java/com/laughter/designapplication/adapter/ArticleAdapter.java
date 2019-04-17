@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.activity.DetailActivity;
 import com.laughter.designapplication.model.Article;
@@ -32,7 +31,7 @@ import butterknife.ButterKnife;
  * created by JH at 2019/4/11
  * des： com.laughter.designapplication.adapter
  */
-public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> implements HttpCallbackListener {
+public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> implements HttpUtil.HttpCallbackListener {
 
     private List<Article> articleList;
     private Context mContext;

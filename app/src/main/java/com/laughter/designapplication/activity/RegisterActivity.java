@@ -8,7 +8,6 @@ import android.widget.EditText;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.util.HttpUtil;
 import com.laughter.framework.activity.BaseActivity;
@@ -23,7 +22,7 @@ import butterknife.OnClick;
  * des： com.laughter.designapplication.activity
  */
 
-public class RegisterActivity extends BaseActivity implements HttpCallbackListener {
+public class RegisterActivity extends BaseActivity implements HttpUtil.HttpCallbackListener {
 
     @BindView(R.id.edit_name) EditText editUserName;
     @BindView(R.id.edit_pass) EditText editPassword;

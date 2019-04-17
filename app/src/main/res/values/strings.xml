@@ -47,4 +47,8 @@
     <string name="priority_text">优先级：%1$s</string>
     <string name="empty_text">你还没有TodoList，快来添加吧</string>
     <string name="switch_text">切换</string>
+    <string name="version">当前版本：%1$s</string>
+    <string name="hint">本项目仅作学习交流使用</string>
+    <string name="emmm">欢迎交流，听说关注、点赞、star都会变帅啊 滑稽.gif</string>
+
 </resources>

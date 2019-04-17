@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.adapter.TodoAdapter;
 import com.laughter.designapplication.fragment.TodoAddFragment;
@@ -37,7 +36,7 @@ import butterknife.OnClick;
  * des： com.laughter.designapplication.activity
  */
 
-public class TodoListActivity extends BaseActivity implements HttpCallbackListener,
+public class TodoListActivity extends BaseActivity implements HttpUtil.HttpCallbackListener,
         LoadingListView.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.toolbar) Toolbar mToolbar;

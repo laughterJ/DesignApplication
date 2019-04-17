@@ -9,9 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.activity.DetailActivity;
 import com.laughter.designapplication.adapter.ArticleAdapter;
@@ -39,7 +36,7 @@ import butterknife.BindView;
  */
 
 public class HomePageFragment extends BaseFragment implements OnRefreshListener, OnLoadMoreListener,
-        HttpCallbackListener, BannerView.OnItemClickListener {
+        HttpUtil.HttpCallbackListener, BannerView.OnItemClickListener {
 
     @BindView(R.id.banner_view)
     BannerView mBannerView;

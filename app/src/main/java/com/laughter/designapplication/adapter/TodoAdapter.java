@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
-import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.activity.TodoListActivity;
 import com.laughter.designapplication.model.TodoItem;
@@ -34,7 +33,7 @@ import butterknife.ButterKnife;
  * 版权： 江苏远大信息股份有限公司
  * 描述： com.laughter.designapplication.adapter
  */
-public class TodoAdapter extends BaseAdapter implements HttpCallbackListener {
+public class TodoAdapter extends BaseAdapter implements HttpUtil.HttpCallbackListener {
 
     private Context mContext;
     private List<TodoItem> todoItems;

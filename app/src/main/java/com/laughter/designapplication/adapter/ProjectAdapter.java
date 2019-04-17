@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.activity.DetailActivity;
 import com.laughter.designapplication.model.Project;
@@ -35,7 +34,7 @@ import butterknife.ButterKnife;
  * created by JH at 2019/4/11
  * des： com.laughter.designapplication.adapter
  */
-public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHolder> implements HttpCallbackListener {
+public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHolder> implements HttpUtil.HttpCallbackListener {
 
     private Context mContext;
     private List<Project> projects;

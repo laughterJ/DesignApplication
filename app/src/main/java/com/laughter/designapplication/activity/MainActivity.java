@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.fragment.HomePageFragment;
 import com.laughter.designapplication.fragment.KnowledgeFragment;
@@ -33,7 +32,7 @@ import butterknife.BindView;
  * des： com.laughter.designapplication.activity
  */
 
-public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, HttpCallbackListener {
+public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, HttpUtil.HttpCallbackListener {
 
     @BindView(R.id.bottombar)
     BottomNavigationView mBottomBar;

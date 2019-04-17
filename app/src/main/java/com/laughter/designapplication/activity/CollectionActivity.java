@@ -4,9 +4,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.adapter.CollectionAdapter;
 import com.laughter.designapplication.model.Article;
@@ -28,7 +25,8 @@ import butterknife.BindView;
  * des： com.laughter.designapplication.activity
  */
 
-public class CollectionActivity extends BaseActivity implements LoadingListView.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener, HttpCallbackListener {
+public class CollectionActivity extends BaseActivity implements LoadingListView.OnLoadMoreListener,
+        SwipeRefreshLayout.OnRefreshListener, HttpUtil.HttpCallbackListener {
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.rlv_collection)
@@ -50,6 +48,8 @@ public class CollectionActivity extends BaseActivity implements LoadingListView.
     public void initView() {
         mToolbar.setTitle("我的收藏");
         setSupportActionBar(mToolbar);
+        mToolbar.setNavigationIcon(R.drawable.ic_back);
+        mToolbar.setNavigationOnClickListener(v -> finish());
 
         mRefreshLayout.setColorSchemeColors(primaryColor);
         mRefreshLayout.setOnRefreshListener(this);

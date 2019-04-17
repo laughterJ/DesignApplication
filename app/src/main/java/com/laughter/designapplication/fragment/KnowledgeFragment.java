@@ -13,7 +13,6 @@ import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.laughter.designapplication.HttpCallbackListener;
 import com.laughter.designapplication.R;
 import com.laughter.designapplication.adapter.TreesAdapter;
 import com.laughter.designapplication.model.Tree;
@@ -32,7 +31,7 @@ import butterknife.BindView;
  * des： com.laughter.designapplication.fragment
  */
 
-public class KnowledgeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, HttpCallbackListener {
+public class KnowledgeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, HttpUtil.HttpCallbackListener {
 
     @BindView(R.id.srl_tree) SwipeRefreshLayout srlTree;
     @BindView(R.id.rl_tree) RecyclerView rlTree;
